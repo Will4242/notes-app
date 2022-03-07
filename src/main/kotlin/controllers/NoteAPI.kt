@@ -1,6 +1,7 @@
 package controllers
 
 import models.Note
+import kotlin.math.sign
 
 class NoteAPI {
     private var notes = ArrayList<Note>()
@@ -59,5 +60,9 @@ class NoteAPI {
             listOfNotes
         }
     }
+    fun numberOfArchivedNotes(): Int {
+        return notes.count({it.isNoteArchived})
 }
 
+
+}
