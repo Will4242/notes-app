@@ -1,6 +1,7 @@
 package controllers
 
 import models.Note
+import kotlin.math.sign
 
 class NoteAPI {
     private var notes = ArrayList<Note>()
@@ -34,5 +35,36 @@ class NoteAPI {
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
+    fun listActiveNotes(): String {
+            return if (notes.isEmpty()) {
+                "No notes stored"
+            } else {
+                var listOfNotes = ""
+                for (i in notes.indices) {
+                    if(!notes[i].isNoteArchived)
+                    listOfNotes += "${i}: ${notes[i]} \n"
+                }
+                listOfNotes
+            }
+    }
+    //took out explanation mark to list archive
+    fun listArchivedNotes(): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            var listOfNotes = ""
+            for (i in notes.indices) {
+                if(notes[i].isNoteArchived)
+                    listOfNotes += "${i}: ${notes[i]} \n"
+            }
+            listOfNotes
+        }
+    }
+    fun numberOfArchivedNotes(): Int {
+        return notes.count({it.isNoteArchived})
 }
+    fun numberOfActiveNotes(): Int {
+        return notes.count({!it.isNoteArchived})
+    }
 
+}
