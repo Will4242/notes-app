@@ -63,6 +63,8 @@ class NoteAPI {
     fun numberOfArchivedNotes(): Int {
         return notes.count({it.isNoteArchived})
 }
-
+    fun numberOfActiveNotes(): Int {
+        return notes.count({!it.isNoteArchived})
+    }
 
 }
