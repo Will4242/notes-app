@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="controllers.NoteAPITest$numberOfActiveNotes" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-03-08T10:45:35" hostname="LAPTOP-M9AQNCMP" time="0.06">
+  <properties/>
+  <testcase name="listActiveNotes returns No Active Notes Stored message when no Active Notes but ArrayList is not empty()" classname="controllers.NoteAPITest$numberOfActiveNotes" time="0.056"/>
+  <testcase name="listActiveNotes returns Notes when ArrayList has active notes stored()" classname="controllers.NoteAPITest$numberOfActiveNotes" time="0.001"/>
+  <testcase name="numberOfActiveNotes returns No Notes Stored message when ArrayList is empty()" classname="controllers.NoteAPITest$numberOfActiveNotes" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
