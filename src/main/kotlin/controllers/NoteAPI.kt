@@ -59,7 +59,9 @@ class NoteAPI {
                 if(notes[i].isNoteArchived)
                     listOfNotes += "${i}: ${notes[i]} \n"
             }
-            listOfNotes
+            if(listOfNotes.isEmpty())
+                "no archived notes"
+            else listOfNotes
         }
     }
     fun numberOfArchivedNotes(): Int {
