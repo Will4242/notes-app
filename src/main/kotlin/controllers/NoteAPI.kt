@@ -44,7 +44,9 @@ class NoteAPI {
                     if(!notes[i].isNoteArchived)
                     listOfNotes += "${i}: ${notes[i]} \n"
                 }
-                listOfNotes
+                if(listOfNotes.isEmpty())
+                    "no active notes"
+                else listOfNotes
             }
     }
     //took out explanation mark to list archive

@@ -86,5 +86,31 @@ class NoteAPITest {
             assertTrue(notesString.contains("summer holiday"))
         }
     }
+    @Nested
+    inner class ListActiveNotes {
 
+        @Test
+        fun `listActiveNotes returns No Notes Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.listActiveNotes().lowercase().contains("no notes"))
+        }
+        @Test
+        fun `listActiveNotes returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
+            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
+            var testArchiveNote = Note("wash hair",1,"Work",true)
+            emptyNotes!!.add(testArchiveNote)
+            assertTrue(emptyNotes!!.listActiveNotes().lowercase().contains("no active notes"))
+        }
+
+        @Test
+        fun `listActiveNotes returns Notes when ArrayList has active notes stored`() {
+            assertEquals(5, populatedNotes!!.numberOfActiveNotes())
+            val notesString = populatedNotes!!.listActiveNotes().lowercase()
+            assertTrue(notesString.contains("learning kotlin"))
+            assertTrue(notesString.contains("code app"))
+            assertTrue(notesString.contains("test app"))
+            assertTrue(notesString.contains("swim"))
+            assertTrue(notesString.contains("summer holiday"))
+        }
+    }
 }
