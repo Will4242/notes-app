@@ -141,4 +141,27 @@ class NoteAPITest {
             assertTrue(!notesString.contains("summer holiday"))
         }
     }
+    @Nested
+    inner class numberOfArchivedNotes {
+
+        @Test
+        fun `numberOfArchivedNotes returns No Notes Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.listArchivedNotes().lowercase().contains("no notes"))
+        }
+        @Test
+        fun `numberOfArchivedNotes returns No Archived Notes Stored message when no Archive Notes but ArrayList is not empty`() {
+            assertEquals(0, emptyNotes!!.numberOfArchivedNotes())
+            var testArchiveNote = Note("clean up",2,"Work",false)
+            emptyNotes!!.add(testArchiveNote)
+            assertTrue(emptyNotes!!.listArchivedNotes().lowercase().contains("no archived notes"))
+        }
+
+        @Test
+        fun `numberOfArchivedNotes returns Notes when ArrayList has archived notes stored`() {
+            assertEquals(0, populatedNotes!!.numberOfArchivedNotes())
+            populatedNotes!!.findNote(0)!!.isNoteArchived = true
+            assertEquals(1, populatedNotes!!.numberOfArchivedNotes())
+        }
+    }
 }
