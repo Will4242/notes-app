@@ -1,6 +1,20 @@
 # Notes App
 
-## A notes app that allows you too carry out many tasks.
+Console Notes App written in Kotlin.
 
-- Input mismatch exception.
-- Added Logging support.
+##Project Description
+
+The Notes App is a Menu-Driven Console App that allows the user to perform the following on a List of Notes:
+
+ -   Add a Note
+ -   List a Note
+ -   Update a Note
+ -   Delete a Note
+
+The user can search for notes by their title.
+
+The notes can be persisted to files in the following format:
+
+ -   XML
+ -   JSON
+
