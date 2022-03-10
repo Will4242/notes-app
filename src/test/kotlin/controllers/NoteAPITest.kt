@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import java.util.*
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
 class NoteAPITest {
 
@@ -187,4 +189,48 @@ class NoteAPITest {
             assertEquals(4, populatedNotes!!.numberOfActiveNotes())
         }
     }
+    /*
+    @Nested
+    inner class listNotesBySelectedPriority {
+
+    @Test
+    fun `listNotesBySelectedPriority returns No Notes when ArrayList is empty`() {
+        assertEquals(0, emptyNotes!!.numberOfNotes())
+        assertTrue(emptyNotes!!.listNotesBySelectedPriority(1).lowercase().contains("no notes")
+        )
+    }
+
+    @Test
+    fun `listNotesBySelectedPriority returns no notes when no notes of that priority exist`() {
+        //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val priority2String = populatedNotes!!.listNotesBySelectedPriority(2).lowercase()
+        assertTrue(priority2String.contains("no notes"))
+        assertTrue(priority2String.contains("2"))
+    }
+
+    @Test
+    fun `listNotesBySelectedPriority returns all notes that match that priority when notes of that priority exist`() {
+        //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val priorityString = populatedNotes!!.listNotesBySelectedPriority(1).lowercase()
+        assertTrue(priorityString.contains("1 note"))
+        assertTrue(priorityString.contains("priority 1"))
+        assertTrue(priorityString.contains("summer holiday"))
+        assertFalse(priorityString.contains("swim"))
+        assertFalse(priorityString.contains("learning kotlin"))
+        assertFalse(priorityString.contains("code app"))
+        assertFalse(priorityString.contains("test app"))
+
+
+        val priority4String = populatedNotes!!.listNotesBySelectedPriority(4).lowercase(Locale.getDefault())
+        assertTrue(priority4String.contains("2 note"))
+        assertTrue(priority4String.contains("priority 4"))
+        assertFalse(priority4String.contains("swim"))
+        assertTrue(priority4String.contains("code app"))
+        assertTrue(priority4String.contains("test app"))
+        assertFalse(priority4String.contains("learning kotlin"))
+        assertFalse(priority4String.contains("summer holiday"))
+    }
+    }*/
 }
