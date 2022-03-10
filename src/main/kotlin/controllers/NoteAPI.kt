@@ -21,6 +21,7 @@ class NoteAPI {
             listOfNotes
         }
     }
+
     fun numberOfNotes(): Int {
         return notes.size
     }
@@ -35,6 +36,7 @@ class NoteAPI {
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
+
     fun listActiveNotes(): String {
             return if (notes.isEmpty()) {
                 "No notes stored"
@@ -49,6 +51,7 @@ class NoteAPI {
                 else listOfNotes
             }
     }
+
     //took out explanation mark to list archive
     fun listArchivedNotes(): String {
         return if (notes.isEmpty()) {
@@ -64,11 +67,32 @@ class NoteAPI {
             else listOfNotes
         }
     }
+
     fun numberOfArchivedNotes(): Int {
         return notes.count({it.isNoteArchived})
 }
+
     fun numberOfActiveNotes(): Int {
         return notes.count({!it.isNoteArchived})
     }
 
+    fun listNotesBySelectedPriority(priority: Int): String {
+
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            var listOfNotes = ""
+            for (i in notes.indices) {
+
+                if(notes[i].notePriority==priority)
+                    listOfNotes += "${i}: ${notes[i]} \n"
+            }
+           if(!listOfNotes.isEmpty())
+               listOfNotes
+            else "No notes of this priority"
+    }
+}
+    fun numberOfNotesByPriority(priority: Int): Int{
+        return notes.count({it.notePriority==priority})
+}
 }
