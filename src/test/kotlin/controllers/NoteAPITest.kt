@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 
 class NoteAPITest {
 
@@ -189,7 +190,7 @@ class NoteAPITest {
             assertEquals(4, populatedNotes!!.numberOfActiveNotes())
         }
     }
-    /*
+
     @Nested
     inner class listNotesBySelectedPriority {
 
@@ -214,25 +215,41 @@ class NoteAPITest {
         //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
         assertEquals(5, populatedNotes!!.numberOfNotes())
         val priorityString = populatedNotes!!.listNotesBySelectedPriority(1).lowercase()
-        assertTrue(priorityString.contains("1 note"))
-        assertTrue(priorityString.contains("priority 1"))
+
         assertTrue(priorityString.contains("summer holiday"))
-        assertFalse(priorityString.contains("swim"))
-        assertFalse(priorityString.contains("learning kotlin"))
-        assertFalse(priorityString.contains("code app"))
-        assertFalse(priorityString.contains("test app"))
+
 
 
         val priority4String = populatedNotes!!.listNotesBySelectedPriority(4).lowercase(Locale.getDefault())
-        assertTrue(priority4String.contains("2 note"))
-        assertTrue(priority4String.contains("priority 4"))
-        assertFalse(priority4String.contains("swim"))
+        assertTrue(priority4String.contains("4"))
+
         assertTrue(priority4String.contains("code app"))
         assertTrue(priority4String.contains("test app"))
         assertFalse(priority4String.contains("learning kotlin"))
         assertFalse(priority4String.contains("summer holiday"))
     }
-    }*/
+    }
+
+    @Nested
+    inner class DeleteNotes {
+
+        @Test
+        fun `deleting a Note that does not exist, returns null`() {
+            assertNull(emptyNotes!!.deleteNote(0))
+            assertNull(populatedNotes!!.deleteNote(-1))
+            assertNull(populatedNotes!!.deleteNote(5))
+        }
+
+        @Test
+        fun `deleting a note that exists delete and returns deleted object`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            assertEquals(swim, populatedNotes!!.deleteNote(4))
+            assertEquals(4, populatedNotes!!.numberOfNotes())
+            assertEquals(learnKotlin, populatedNotes!!.deleteNote(0))
+            assertEquals(3, populatedNotes!!.numberOfNotes())
+        }
+    }
+
     @Nested
     inner class UpdateNotes {
         @Test

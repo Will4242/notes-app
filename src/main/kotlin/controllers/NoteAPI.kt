@@ -1,6 +1,8 @@
 package controllers
 
+import listNotes
 import models.Note
+import utils.ScannerInput.readNextInt
 import kotlin.math.sign
 
 class NoteAPI {
@@ -8,6 +10,12 @@ class NoteAPI {
 
     fun add(note: Note): Boolean {
         return notes.add(note)
+    }
+
+    fun deleteNote(indexToDelete: Int): Note? {
+        return if (isValidListIndex(indexToDelete, notes)) {
+            notes.removeAt(indexToDelete)
+        } else null
     }
 
     fun listAllNotes(): String {
@@ -109,7 +117,7 @@ class NoteAPI {
             }
            if(!listOfNotes.isEmpty())
                listOfNotes
-            else "No notes of this priority"
+            else "No notes fpr priority ${priority}"
     }
 }
     fun numberOfNotesByPriority(priority: Int): Int{
