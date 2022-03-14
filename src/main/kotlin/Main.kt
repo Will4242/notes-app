@@ -37,8 +37,9 @@ fun mainMenu() : Int {
          > |   7) Number of archived notes  |
          > |   8) Number of active notes    |
          > |   9) List notes by priority    |
-         > |  10) Save                      |
-         > |  11) Load                      |   
+         > |  10) List ordered priority     |
+         > |  11) Save                      |
+         > |  12) Load                      |   
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -58,8 +59,9 @@ fun runMenu() {
             7  -> numberOfArchivedNotes()
             8  -> numberOfActiveNotes()
             9  -> listNotesBySelectedPriority()
-            10 -> save()
-            11 -> load()
+            10 -> notesSortedByPriority()
+            11 -> save()
+            12 -> load()
             0  -> exitApp()
             else -> System.out.println("Invalid option entered: ${option}")
         }
@@ -164,4 +166,7 @@ fun listNotesBySelectedPriority(){
     val chosenPriority=ScannerInput.readNextInt("Enter priority")
     println(noteAPI.listNotesBySelectedPriority(chosenPriority))
     println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} for this priority")
+}
+fun notesSortedByPriority(){
+    println(noteAPI.notesSortedByPriority())
 }
