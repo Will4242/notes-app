@@ -2,10 +2,25 @@ package controllers
 
 import listNotes
 import models.Note
+import persistence.Serializer
 import utils.ScannerInput.readNextInt
 import kotlin.math.sign
 
-class NoteAPI {
+class NoteAPI(serializerType: Serializer){
+
+    private var serializer: Serializer = serializerType
+
+    @Throws(Exception::class)
+    fun load() {
+        notes = serializer.read() as ArrayList<Note>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(notes)
+    }
+
+
     private var notes = ArrayList<Note>()
 
     fun add(note: Note): Boolean {
