@@ -149,4 +149,9 @@ class NoteAPI(serializerType: Serializer){
         notes.sortBy { it.noteTitle }
         return listActiveNotes()
 }
+
+    fun notesSortedByCategory(): String{
+        notes.sortBy { it.noteCategory }
+        return listActiveNotes()
+    }
 }

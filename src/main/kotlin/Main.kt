@@ -63,7 +63,7 @@ fun runMenu() {
             9  -> listNotesBySelectedPriority()
             10 -> notesSortedByPriority()
             11 -> notesSortedByTitle()
-            //12 -> notesSortedByCategory()
+            12 -> notesSortedByCategory()
             13 -> save()
             14 -> load()
             0  -> exitApp()
@@ -176,4 +176,7 @@ fun notesSortedByPriority(){
 }
 fun notesSortedByTitle(){
     println(noteAPI.notesSortedByTitle())
+}
+fun notesSortedByCategory(){
+    println(noteAPI.notesSortedByCategory())
 }
