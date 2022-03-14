@@ -394,4 +394,31 @@ class NoteAPITest {
 
         }
     }
+
+    @Nested
+    inner class notesSortedByTitle {
+
+        @Test
+        fun `notesSortedByTitle returns No Notes Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.notesSortedByTitle().lowercase().contains("no notes"))
+        }
+
+        @Test
+        fun `notesSortedByTitle returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
+            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
+            var testArchiveNote = Note("wash hair", 1, "Work", true)
+            emptyNotes!!.add(testArchiveNote)
+            assertTrue(emptyNotes!!.listActiveNotes().lowercase().contains("no active notes"))
+        }
+
+        @Test
+        fun `notesSortedByTitle returns Notes when ArrayList has active notes stored`() {
+            assertEquals(5, populatedNotes!!.numberOfActiveNotes())
+            var notesString = populatedNotes!!.listActiveNotes().lowercase()
+            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            notesString = populatedNotes!!.notesSortedByTitle().lowercase()
+            assertTrue(notesString.startsWith("0: note(notetitle=code app, notepriority=4, notecategory=work, isnotearchived=false)"))
+        }
+    }
 }

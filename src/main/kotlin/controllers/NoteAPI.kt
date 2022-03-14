@@ -135,11 +135,18 @@ class NoteAPI(serializerType: Serializer){
             else "No notes fpr priority ${priority}"
     }
 }
+
     fun numberOfNotesByPriority(priority: Int): Int{
         return notes.count({it.notePriority==priority})
 }
+
    fun notesSortedByPriority(): String{
         notes.sortBy { it.notePriority }
        return listActiveNotes()
    }
+
+    fun notesSortedByTitle(): String{
+        notes.sortBy { it.noteTitle }
+        return listActiveNotes()
+}
 }

@@ -38,8 +38,10 @@ fun mainMenu() : Int {
          > |   8) Number of active notes    |
          > |   9) List notes by priority    |
          > |  10) List ordered priority     |
-         > |  11) Save                      |
-         > |  12) Load                      |   
+         > |  11) List ordered title        |
+         > |  12) List ordered category     |  
+         > |  13) save                      |
+         > |  14) load                      |
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -60,8 +62,10 @@ fun runMenu() {
             8  -> numberOfActiveNotes()
             9  -> listNotesBySelectedPriority()
             10 -> notesSortedByPriority()
-            11 -> save()
-            12 -> load()
+            11 -> notesSortedByTitle()
+            //12 -> notesSortedByCategory()
+            13 -> save()
+            14 -> load()
             0  -> exitApp()
             else -> System.out.println("Invalid option entered: ${option}")
         }
@@ -169,4 +173,7 @@ fun listNotesBySelectedPriority(){
 }
 fun notesSortedByPriority(){
     println(noteAPI.notesSortedByPriority())
+}
+fun notesSortedByTitle(){
+    println(noteAPI.notesSortedByTitle())
 }
