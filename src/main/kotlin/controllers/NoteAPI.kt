@@ -135,7 +135,46 @@ class NoteAPI(serializerType: Serializer){
             else "No notes fpr priority ${priority}"
     }
 }
+
     fun numberOfNotesByPriority(priority: Int): Int{
         return notes.count({it.notePriority==priority})
 }
+
+   fun notesSortedByPriority(): String{
+        notes.sortBy { it.notePriority }
+       return listActiveNotes()
+   }
+
+    fun notesSortedByTitle(): String{
+        notes.sortBy { it.noteTitle }
+        return listActiveNotes()
+}
+
+    fun notesSortedByCategory(): String{
+        notes.sortBy { it.noteCategory }
+        return listActiveNotes()
+    }
+
+    fun listNotesBySelectedCategory(category: String): String {
+
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            notes.sortBy { it.notePriority }
+
+            var listOfNotes = ""
+            for (i in notes.indices) {
+
+                if(notes[i].noteCategory.lowercase().equals(category.lowercase()))
+                    listOfNotes += "${i}: ${notes[i]} \n"
+            }
+            if(!listOfNotes.isEmpty())
+                listOfNotes
+            else "No notes for category ${category}"
+        }
+    }
+
+    fun numberOfNotesByCategory(category: String): Int {
+        return notes.count ({ it.noteCategory==category })
+    }
 }

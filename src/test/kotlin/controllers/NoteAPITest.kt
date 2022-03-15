@@ -32,6 +32,7 @@ class NoteAPITest {
         testApp = Note("Test App", 4, "Work", false)
         swim = Note("Swim - Pool", 3, "Hobby", false)
 
+
         //adding 5 Note to the notes api
         populatedNotes!!.add(learnKotlin!!)
         populatedNotes!!.add(summerHoliday!!)
@@ -364,6 +365,127 @@ class NoteAPITest {
             assertEquals(storingNotes.findNote(0), loadedNotes.findNote(0))
             assertEquals(storingNotes.findNote(1), loadedNotes.findNote(1))
             assertEquals(storingNotes.findNote(2), loadedNotes.findNote(2))
+        }
+    }
+
+    @Nested
+    inner class notesSortedByPriority {
+
+        @Test
+        fun `notesSortedByPriority returns No Notes Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.notesSortedByPriority().lowercase().contains("no notes"))
+        }
+
+        @Test
+        fun `notesSortedByPriority returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
+            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
+            var testArchiveNote = Note("wash hair", 1, "Work", true)
+            emptyNotes!!.add(testArchiveNote)
+            assertTrue(emptyNotes!!.listActiveNotes().lowercase().contains("no active notes"))
+        }
+
+        @Test
+        fun `notesSortedByPriority returns Notes when ArrayList has active notes stored`() {
+            assertEquals(5, populatedNotes!!.numberOfActiveNotes())
+            var notesString = populatedNotes!!.listActiveNotes().lowercase()
+            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            notesString = populatedNotes!!.notesSortedByPriority()
+            assertTrue(notesString.startsWith("0: Note(noteTitle=Summer Holiday to France, notePriority=1, noteCategory=Holiday, isNoteArchived=false)"))
+
+        }
+    }
+
+    @Nested
+    inner class notesSortedByTitle {
+
+        @Test
+        fun `notesSortedByTitle returns No Notes Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.notesSortedByTitle().lowercase().contains("no notes"))
+        }
+
+        @Test
+        fun `notesSortedByTitle returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
+            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
+            var testArchiveNote = Note("wash hair", 1, "Work", true)
+            emptyNotes!!.add(testArchiveNote)
+            assertTrue(emptyNotes!!.listActiveNotes().lowercase().contains("no active notes"))
+        }
+
+        @Test
+        fun `notesSortedByTitle returns Notes when ArrayList has active notes stored`() {
+            assertEquals(5, populatedNotes!!.numberOfActiveNotes())
+            var notesString = populatedNotes!!.listActiveNotes().lowercase()
+            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            notesString = populatedNotes!!.notesSortedByTitle().lowercase()
+            assertTrue(notesString.startsWith("0: note(notetitle=code app, notepriority=4, notecategory=work, isnotearchived=false)"))
+        }
+    }
+
+    @Nested
+    inner class notesSortedByCategory {
+
+        @Test
+        fun `notesSortedByCategory returns No Notes Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.notesSortedByCategory().lowercase().contains("no notes"))
+        }
+
+        @Test
+        fun `notesSortedByCategory returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
+            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
+            var testArchiveNote = Note("wash hair", 1, "Work", true)
+            emptyNotes!!.add(testArchiveNote)
+            assertTrue(emptyNotes!!.listActiveNotes().lowercase().contains("no active notes"))
+        }
+
+        @Test
+        fun `notesSortedByCategory returns Notes when ArrayList has active notes stored`() {
+            assertEquals(5, populatedNotes!!.numberOfActiveNotes())
+            var notesString = populatedNotes!!.listActiveNotes().lowercase()
+            print(notesString)
+            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            notesString = populatedNotes!!.notesSortedByCategory().lowercase()
+            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+        }
+    }
+
+    @Nested
+    inner class listNotesBySelectedCategory {
+
+        @Test
+        fun `listNotesBySelectedCategory returns No Notes when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(
+                emptyNotes!!.listNotesBySelectedCategory("Work").lowercase().contains("no notes")
+            )
+        }
+
+        @Test
+        fun `listNotesBySelectedCategory returns no notes when no notes of that priority exist`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            val priority2String = populatedNotes!!.listNotesBySelectedCategory("Home").lowercase()
+            assertTrue(priority2String.contains("no notes"))
+        }
+
+        @Test
+        fun `listNotesBySelectedCategory returns all notes that match that priority when notes of that priority exist`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            var learnJava:Note = Note("Learning Java", 1, "College", false)
+            populatedNotes!!.add(learnJava)
+            val categoryString = populatedNotes!!.listNotesBySelectedCategory("college").lowercase()
+
+            assertTrue(categoryString.contains("college"))
+
+
+            val priority4String = populatedNotes!!.listNotesBySelectedCategory("Work").lowercase()
+            print(priority4String)
+            assertTrue(priority4String.contains("4"))
+            assertTrue(priority4String.contains("code app"))
+            assertTrue(priority4String.contains("test app"))
+            assertFalse(priority4String.contains("learning kotlin"))
+            assertFalse(priority4String.contains("summer holiday"))
         }
     }
 }
