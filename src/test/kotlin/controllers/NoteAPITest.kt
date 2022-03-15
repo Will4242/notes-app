@@ -32,6 +32,7 @@ class NoteAPITest {
         testApp = Note("Test App", 4, "Work", false)
         swim = Note("Swim - Pool", 3, "Hobby", false)
 
+
         //adding 5 Note to the notes api
         populatedNotes!!.add(learnKotlin!!)
         populatedNotes!!.add(summerHoliday!!)
@@ -447,6 +448,44 @@ class NoteAPITest {
             assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
             notesString = populatedNotes!!.notesSortedByCategory().lowercase()
             assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+        }
+    }
+
+    @Nested
+    inner class listNotesBySelectedCategory {
+
+        @Test
+        fun `listNotesBySelectedCategory returns No Notes when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(
+                emptyNotes!!.listNotesBySelectedCategory("Work").lowercase().contains("no notes")
+            )
+        }
+
+        @Test
+        fun `listNotesBySelectedCategory returns no notes when no notes of that priority exist`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            val priority2String = populatedNotes!!.listNotesBySelectedCategory("Home").lowercase()
+            assertTrue(priority2String.contains("no notes"))
+        }
+
+        @Test
+        fun `listNotesBySelectedCategory returns all notes that match that priority when notes of that priority exist`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            var learnJava:Note = Note("Learning Java", 1, "College", false)
+            populatedNotes!!.add(learnJava)
+            val categoryString = populatedNotes!!.listNotesBySelectedCategory("college").lowercase()
+
+            assertTrue(categoryString.contains("college"))
+
+
+            val priority4String = populatedNotes!!.listNotesBySelectedCategory("Work").lowercase()
+            print(priority4String)
+            assertTrue(priority4String.contains("4"))
+            assertTrue(priority4String.contains("code app"))
+            assertTrue(priority4String.contains("test app"))
+            assertFalse(priority4String.contains("learning kotlin"))
+            assertFalse(priority4String.contains("summer holiday"))
         }
     }
 }

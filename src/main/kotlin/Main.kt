@@ -2,8 +2,6 @@ import controllers.NoteAPI
 import models.Note
 import mu.KotlinLogging
 import persistence.JSONSerializer
-import persistence.Serializer
-import persistence.XMLSerializer
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -37,11 +35,12 @@ fun mainMenu() : Int {
          > |   7) Number of archived notes  |
          > |   8) Number of active notes    |
          > |   9) List notes by priority    |
-         > |  10) List ordered priority     |
-         > |  11) List ordered title        |
-         > |  12) List ordered category     |  
-         > |  13) save                      |
-         > |  14) load                      |
+         > |  10) List ordered by priority  |
+         > |  11) List ordered by title     |
+         > |  12) List ordered by category  |
+         > |  13) List selected category    |
+         > |  14) save                      |
+         > |  15) load                      |
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -64,8 +63,9 @@ fun runMenu() {
             10 -> notesSortedByPriority()
             11 -> notesSortedByTitle()
             12 -> notesSortedByCategory()
-            13 -> save()
-            14 -> load()
+            13 -> listNotesBySelectedCategory()
+            14 -> save()
+            15 -> load()
             0  -> exitApp()
             else -> System.out.println("Invalid option entered: ${option}")
         }
@@ -167,7 +167,7 @@ fun numberOfActiveNotes() {
     println(noteAPI.numberOfActiveNotes())
 }
 fun listNotesBySelectedPriority(){
-    val chosenPriority=ScannerInput.readNextInt("Enter priority")
+    val chosenPriority=ScannerInput.readNextInt("Enter priority ")
     println(noteAPI.listNotesBySelectedPriority(chosenPriority))
     println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} for this priority")
 }
@@ -179,4 +179,10 @@ fun notesSortedByTitle(){
 }
 fun notesSortedByCategory(){
     println(noteAPI.notesSortedByCategory())
+}
+//lists selected category ordered by priority with number of notes in that category
+fun listNotesBySelectedCategory(){
+    val chosenCategory=ScannerInput.readNextLine("Enter category ")
+    println(noteAPI.listNotesBySelectedCategory(chosenCategory))
+    println("There are ${noteAPI.numberOfNotesByCategory(chosenCategory)} notes for this category")
 }

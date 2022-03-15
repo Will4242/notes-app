@@ -154,4 +154,27 @@ class NoteAPI(serializerType: Serializer){
         notes.sortBy { it.noteCategory }
         return listActiveNotes()
     }
+
+    fun listNotesBySelectedCategory(category: String): String {
+
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            notes.sortBy { it.notePriority }
+
+            var listOfNotes = ""
+            for (i in notes.indices) {
+
+                if(notes[i].noteCategory.lowercase().equals(category.lowercase()))
+                    listOfNotes += "${i}: ${notes[i]} \n"
+            }
+            if(!listOfNotes.isEmpty())
+                listOfNotes
+            else "No notes for category ${category}"
+        }
+    }
+
+    fun numberOfNotesByCategory(category: String): Int {
+        return notes.count ({ it.noteCategory==category })
+    }
 }
