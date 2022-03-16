@@ -30,17 +30,18 @@ fun mainMenu() : Int {
          > |   2) List all notes            |
          > |   3) Update a note             |
          > |   4) Delete a note             |
-         > |   5) List active notes         |
-         > |   6) List archive notes        |
-         > |   7) Number of archived notes  |
-         > |   8) Number of active notes    |
-         > |   9) List notes by priority    |
-         > |  10) List ordered by priority  |
-         > |  11) List ordered by title     |
-         > |  12) List ordered by category  |
-         > |  13) List selected category    |
-         > |  14) save                      |
-         > |  15) load                      |
+         > |   5) Archive a note            |
+         > |   6) List active notes         |
+         > |   7) List archive notes        |
+         > |   8) Number of archived notes  |
+         > |   9) Number of active notes    |
+         > |  10) List notes by priority    |
+         > |  11) List ordered by priority  |
+         > |  12) List ordered by title     |
+         > |  13) List ordered by category  |
+         > |  14) List selected category    |
+         > |  15) save                      |
+         > |  16) load                      |
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -55,17 +56,18 @@ fun runMenu() {
             2  -> listNotes()
             3  -> updateNote()
             4  -> deleteNote()
-            5  -> listActiveNotes()
-            6  -> listArchivedNotes()
-            7  -> numberOfArchivedNotes()
-            8  -> numberOfActiveNotes()
-            9  -> listNotesBySelectedPriority()
-            10 -> notesSortedByPriority()
-            11 -> notesSortedByTitle()
-            12 -> notesSortedByCategory()
-            13 -> listNotesBySelectedCategory()
-            14 -> save()
-            15 -> load()
+            5  -> archiveNote()
+            6  -> listActiveNotes()
+            7  -> listArchivedNotes()
+            8  -> numberOfArchivedNotes()
+            9  -> numberOfActiveNotes()
+            10 -> listNotesBySelectedPriority()
+            11 -> notesSortedByPriority()
+            12 -> notesSortedByTitle()
+            13 -> notesSortedByCategory()
+            14 -> listNotesBySelectedCategory()
+            15 -> save()
+            16 -> load()
             0  -> exitApp()
             else -> System.out.println("Invalid option entered: ${option}")
         }
@@ -185,4 +187,15 @@ fun listNotesBySelectedCategory(){
     val chosenCategory=ScannerInput.readNextLine("Enter category ")
     println(noteAPI.listNotesBySelectedCategory(chosenCategory))
     println("There are ${noteAPI.numberOfNotesByCategory(chosenCategory)} notes for this category")
+}
+fun archiveNote() {
+    listActiveNotes()
+    if (noteAPI.numberOfActiveNotes() > 0) {
+        val indexToArchive = readNextInt("Enter the index of the note to archive: ")
+        if (noteAPI.archiveNote(indexToArchive)) {
+            println("Archive Successful!")
+        } else {
+            println("Archive NOT Successful")
+        }
+    }
 }

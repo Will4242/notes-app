@@ -177,4 +177,15 @@ class NoteAPI(serializerType: Serializer){
     fun numberOfNotesByCategory(category: String): Int {
         return notes.count ({ it.noteCategory==category })
     }
+
+    fun archiveNote(indexToArchive: Int): Boolean {
+        if (isValidIndex(indexToArchive)) {
+            val noteToArchive = notes[indexToArchive]
+            if (!noteToArchive.isNoteArchived) {
+                noteToArchive.isNoteArchived = true
+                return true
+            }
+        }
+        return false
+    }
 }
