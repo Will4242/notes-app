@@ -2,6 +2,7 @@ import controllers.NoteAPI
 import models.Note
 import mu.KotlinLogging
 import persistence.JSONSerializer
+import persistence.YAMLSerializer
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -11,7 +12,8 @@ import java.lang.System.exit
 
 
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
-private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
+//private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
+private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
 
 private val logger = KotlinLogging.logger {}
 

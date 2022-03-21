@@ -35,5 +35,7 @@ dependencies {
     //For Streaming to XML and JSON
     implementation("com.thoughtworks.xstream:xstream:1.4.18")
     implementation("org.codehaus.jettison:jettison:1.4.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2")
+//https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/2.13.2
 
 }
