@@ -17,4 +17,5 @@ The notes can be persisted to files in the following format:
 
  -   XML
  -   JSON
+ -   YAML
 
