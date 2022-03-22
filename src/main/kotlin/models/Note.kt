@@ -5,4 +5,7 @@ data class Note(
     var notePriority: Int,
     var noteCategory: String,
     var isNoteArchived :Boolean){
+    override fun toString(): String {
+        return "Note(noteTitle='$noteTitle', notePriority=$notePriority, noteCategory='$noteCategory', isNoteArchived=$isNoteArchived)"
+    }
 }
