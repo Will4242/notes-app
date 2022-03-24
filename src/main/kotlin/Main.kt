@@ -191,7 +191,7 @@ fun numberOfActiveNotes() {
 fun listNotesBySelectedPriority(){
     val chosenPriority=ScannerInput.readNextInt("Enter priority ")
     println(noteAPI.listNotesBySelectedPriority(chosenPriority))
-    println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} for this priority")
+    println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} notes for this priority")
 }
 fun notesSortedByPriority(){
     println(noteAPI.notesSortedByPriority())
