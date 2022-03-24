@@ -606,7 +606,7 @@ class NoteAPITest {
             searchResults = populatedNotes!!.searchNotesByCategory("Holiday")
             assertTrue(searchResults.contains("Holiday"))
             assertFalse(searchResults.contains("Swim - Pool"))
-
+//
         }
     }
 }
