@@ -492,44 +492,6 @@ class NoteAPITest {
     }
 
     @Nested
-    inner class listNotesBySelectedCategory {
-
-        @Test
-        fun `listNotesBySelectedCategory returns No Notes when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(
-                emptyNotes!!.searchNotesByCategory("Work").lowercase().contains("no notes")
-            )
-        }
-
-        @Test
-        fun `listNotesBySelectedCategory returns no notes when no notes of that priority exist`() {
-            assertEquals(5, populatedNotes!!.numberOfNotes())
-            val priority2String = populatedNotes!!.searchNotesByCategory("Home").lowercase()
-            assertTrue(priority2String.contains("no notes"))
-        }
-
-        @Test
-        fun `listNotesBySelectedCategory returns all notes that match that priority when notes of that priority exist`() {
-            assertEquals(5, populatedNotes!!.numberOfNotes())
-            var learnJava:Note = Note("Learning Java", 1, "College", false)
-            populatedNotes!!.add(learnJava)
-            val categoryString = populatedNotes!!.searchNotesByCategory("college").lowercase()
-
-            assertTrue(categoryString.contains("college"))
-
-
-            val priority4String = populatedNotes!!.searchNotesByCategory("Work").lowercase()
-            print(priority4String)
-            assertTrue(priority4String.contains("4"))
-            assertTrue(priority4String.contains("code app"))
-            assertTrue(priority4String.contains("test app"))
-            assertFalse(priority4String.contains("learning kotlin"))
-            assertFalse(priority4String.contains("summer holiday"))
-        }
-    }
-
-    @Nested
     inner class ArchiveNotes {
         @Test
         fun `archiving a note that does not exist returns false`(){
@@ -619,6 +581,32 @@ class NoteAPITest {
             assertTrue(searchResults.contains("Code App"))
             assertTrue(searchResults.contains("Test App"))
             assertFalse(searchResults.contains("Swim - Pool"))
+        }
+        @Test
+        fun `search notes by category returns no notes when no notes with that category exist`() {
+            //Searching a populated collection for a category that doesn't exist.
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            val searchResults = populatedNotes!!.searchNotesByCategory("no results expected")
+            assertTrue(searchResults.isEmpty())
+
+            //Searching an empty collection
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.searchNotesByCategory("").isEmpty())
+        }
+
+        @Test
+        fun `search notes by category returns notes when notes with that category exist`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+
+            var searchResults = populatedNotes!!.searchNotesByCategory("work")
+            assertTrue(searchResults.contains("Code App"))
+            assertTrue(searchResults.contains("Test App"))
+            assertFalse(searchResults.contains("Swim - Pool"))
+
+            searchResults = populatedNotes!!.searchNotesByCategory("Holiday")
+            assertTrue(searchResults.contains("Holiday"))
+            assertFalse(searchResults.contains("Swim - Pool"))
+
         }
     }
 }
