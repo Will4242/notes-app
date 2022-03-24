@@ -72,7 +72,7 @@ class NoteAPI(serializerType: Serializer){
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
-
+/*
     fun listActiveNotes(): String {
             return if (notes.isEmpty()) {
                 "No notes stored"
@@ -86,6 +86,14 @@ class NoteAPI(serializerType: Serializer){
                     "no active notes"
                 else listOfNotes
             }
+    }*/
+    fun listActiveNotes(): String =
+    if  (notes.isEmpty()) "No notes stored"
+    else {
+        val notes2 = notes.filter { !it.isNoteArchived }
+        notes2.joinToString(separator = "\n") { note ->
+            notes.indexOf(note).toString() + ": " + note.toString()
+        }
     }
 
     //took out explanation mark to list archive
