@@ -168,7 +168,7 @@ class NoteAPI(serializerType: Serializer){
         return listActiveNotes()
     }
 
-    fun listNotesBySelectedCategory(category: String): String {
+    fun searchNotesByCategory(category: String): String {
 
         return if (notes.isEmpty()) {
             "No notes stored"

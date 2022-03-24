@@ -498,14 +498,14 @@ class NoteAPITest {
         fun `listNotesBySelectedCategory returns No Notes when ArrayList is empty`() {
             assertEquals(0, emptyNotes!!.numberOfNotes())
             assertTrue(
-                emptyNotes!!.listNotesBySelectedCategory("Work").lowercase().contains("no notes")
+                emptyNotes!!.searchNotesByCategory("Work").lowercase().contains("no notes")
             )
         }
 
         @Test
         fun `listNotesBySelectedCategory returns no notes when no notes of that priority exist`() {
             assertEquals(5, populatedNotes!!.numberOfNotes())
-            val priority2String = populatedNotes!!.listNotesBySelectedCategory("Home").lowercase()
+            val priority2String = populatedNotes!!.searchNotesByCategory("Home").lowercase()
             assertTrue(priority2String.contains("no notes"))
         }
 
@@ -514,12 +514,12 @@ class NoteAPITest {
             assertEquals(5, populatedNotes!!.numberOfNotes())
             var learnJava:Note = Note("Learning Java", 1, "College", false)
             populatedNotes!!.add(learnJava)
-            val categoryString = populatedNotes!!.listNotesBySelectedCategory("college").lowercase()
+            val categoryString = populatedNotes!!.searchNotesByCategory("college").lowercase()
 
             assertTrue(categoryString.contains("college"))
 
 
-            val priority4String = populatedNotes!!.listNotesBySelectedCategory("Work").lowercase()
+            val priority4String = populatedNotes!!.searchNotesByCategory("Work").lowercase()
             print(priority4String)
             assertTrue(priority4String.contains("4"))
             assertTrue(priority4String.contains("code app"))
