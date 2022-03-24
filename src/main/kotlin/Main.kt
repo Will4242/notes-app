@@ -204,11 +204,21 @@ fun notesSortedByTitle(){
 fun notesSortedByCategory(){
     println(noteAPI.notesSortedByCategory())
 }
+/*
 //lists selected category ordered by priority with number of notes in that category
 fun searchNotesByCategory(){
     val chosenCategory=ScannerInput.readNextLine("Enter category ")
     println(noteAPI.searchNotesByCategory(chosenCategory))
     println("There are ${noteAPI.numberOfNotesByCategory(chosenCategory)} notes for this category")
+}*/
+fun searchNotesByCategory() {
+    val searchCategory = readNextLine("Enter the category to search by: ")
+    val searchResults = noteAPI.searchNotesByCategory(searchCategory)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
 }
 fun searchNotesByTitle() {
     val searchTitle = readNextLine("Enter the description to search by: ")
