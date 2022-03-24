@@ -174,7 +174,7 @@ class NoteAPI(serializerType: Serializer){
         return listActiveNotes()
     }
 
-    fun searchNotesByCategory(category: String): String {
+    /*fun searchNotesByCategory(category: String): String {
 
         return if (notes.isEmpty()) {
             "No notes stored"
@@ -191,12 +191,16 @@ class NoteAPI(serializerType: Serializer){
                 listOfNotes
             else "No notes for category ${category}"
         }
-    }
+    }*/
+    fun searchNotesByCategory(category: String): String =
+        notes.filter { note -> note.noteCategory.contains(category, ignoreCase = true)}
+            .joinToString (separator = "\n") {
+                    note ->  notes.indexOf(note).toString() + ": " + note.toString() }
 
-   /* fun searchNotesByTitle(searchString : String) =
+    fun searchNotesByTitle(searchString : String) =
         notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true)}
             .joinToString (separator = "\n") {
-                    note ->  notes.indexOf(note).toString() + ": " + note.toString() }*/
+                    note ->  notes.indexOf(note).toString() + ": " + note.toString() }
 
     fun numberOfNotesByCategory(category: String): Int {
         return notes.count ({ it.noteCategory==category })
