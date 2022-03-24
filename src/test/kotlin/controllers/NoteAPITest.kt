@@ -429,9 +429,10 @@ class NoteAPITest {
         fun `notesSortedByPriority returns Notes when ArrayList has active notes stored`() {
             assertEquals(5, populatedNotes!!.numberOfActiveNotes())
             var notesString = populatedNotes!!.listActiveNotes().lowercase()
-            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+
+            assertTrue(notesString.startsWith("0: note(notetitle='learning kotlin', notepriority=5, notecategory='college', isnotearchived=false)"))
             notesString = populatedNotes!!.notesSortedByPriority()
-            assertTrue(notesString.startsWith("0: Note(noteTitle=Summer Holiday to France, notePriority=1, noteCategory=Holiday, isNoteArchived=false)"))
+            assertTrue(notesString.startsWith("0: Note(noteTitle='Summer Holiday to France', notePriority=1, noteCategory='Holiday', isNoteArchived=false)"))
 
         }
     }
@@ -457,9 +458,9 @@ class NoteAPITest {
         fun `notesSortedByTitle returns Notes when ArrayList has active notes stored`() {
             assertEquals(5, populatedNotes!!.numberOfActiveNotes())
             var notesString = populatedNotes!!.listActiveNotes().lowercase()
-            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            assertTrue(notesString.startsWith("0: note(notetitle='learning kotlin', notepriority=5, notecategory='college', isnotearchived=false)"))
             notesString = populatedNotes!!.notesSortedByTitle().lowercase()
-            assertTrue(notesString.startsWith("0: note(notetitle=code app, notepriority=4, notecategory=work, isnotearchived=false)"))
+            assertTrue(notesString.startsWith("0: note(notetitle='code app', notepriority=4, notecategory='work', isnotearchived=false)"))
         }
     }
 
@@ -484,10 +485,9 @@ class NoteAPITest {
         fun `notesSortedByCategory returns Notes when ArrayList has active notes stored`() {
             assertEquals(5, populatedNotes!!.numberOfActiveNotes())
             var notesString = populatedNotes!!.listActiveNotes().lowercase()
-            print(notesString)
-            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            assertTrue(notesString.startsWith("0: note(notetitle='learning kotlin', notepriority=5, notecategory='college', isnotearchived=false)"))
             notesString = populatedNotes!!.notesSortedByCategory().lowercase()
-            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            assertTrue(notesString.startsWith("0: note(notetitle='learning kotlin', notepriority=5, notecategory='college', isnotearchived=false)"))
         }
     }
 
