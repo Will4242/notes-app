@@ -12,8 +12,8 @@ import java.lang.System.exit
 
 
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
-//private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
-private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
+private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
+//private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
 
 private val logger = KotlinLogging.logger {}
 
@@ -72,7 +72,7 @@ fun listNotes() {
                   > |   7) View ordered by priority  |
                   > |   8) View ordered by title     |
                   > |   9) View ordered by category  |
-                  > |  10) View selected category    |
+                  > |  10) Search category           |
                   > ----------------------------------
          > ==>> """.trimMargin(">"))
 
@@ -86,7 +86,7 @@ fun listNotes() {
             7  -> notesSortedByPriority();
             8  -> notesSortedByTitle();
             9  -> notesSortedByCategory();
-            10 -> listNotesBySelectedCategory();
+            10 -> searchNotesByCategory();
             else -> println("Invalid option entered: " + option);
         }
     } else {
@@ -191,7 +191,7 @@ fun numberOfActiveNotes() {
 fun listNotesBySelectedPriority(){
     val chosenPriority=ScannerInput.readNextInt("Enter priority ")
     println(noteAPI.listNotesBySelectedPriority(chosenPriority))
-    println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} for this priority")
+    println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} notes for this priority")
 }
 fun notesSortedByPriority(){
     println(noteAPI.notesSortedByPriority())
@@ -203,9 +203,9 @@ fun notesSortedByCategory(){
     println(noteAPI.notesSortedByCategory())
 }
 //lists selected category ordered by priority with number of notes in that category
-fun listNotesBySelectedCategory(){
+fun searchNotesByCategory(){
     val chosenCategory=ScannerInput.readNextLine("Enter category ")
-    println(noteAPI.listNotesBySelectedCategory(chosenCategory))
+    println(noteAPI.searchNotesByCategory(chosenCategory))
     println("There are ${noteAPI.numberOfNotesByCategory(chosenCategory)} notes for this category")
 }
 fun archiveNote() {

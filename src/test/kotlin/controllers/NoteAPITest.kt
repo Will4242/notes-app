@@ -429,9 +429,10 @@ class NoteAPITest {
         fun `notesSortedByPriority returns Notes when ArrayList has active notes stored`() {
             assertEquals(5, populatedNotes!!.numberOfActiveNotes())
             var notesString = populatedNotes!!.listActiveNotes().lowercase()
-            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+
+            assertTrue(notesString.startsWith("0: note(notetitle='learning kotlin', notepriority=5, notecategory='college', isnotearchived=false)"))
             notesString = populatedNotes!!.notesSortedByPriority()
-            assertTrue(notesString.startsWith("0: Note(noteTitle=Summer Holiday to France, notePriority=1, noteCategory=Holiday, isNoteArchived=false)"))
+            assertTrue(notesString.startsWith("0: Note(noteTitle='Summer Holiday to France', notePriority=1, noteCategory='Holiday', isNoteArchived=false)"))
 
         }
     }
@@ -457,9 +458,9 @@ class NoteAPITest {
         fun `notesSortedByTitle returns Notes when ArrayList has active notes stored`() {
             assertEquals(5, populatedNotes!!.numberOfActiveNotes())
             var notesString = populatedNotes!!.listActiveNotes().lowercase()
-            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            assertTrue(notesString.startsWith("0: note(notetitle='learning kotlin', notepriority=5, notecategory='college', isnotearchived=false)"))
             notesString = populatedNotes!!.notesSortedByTitle().lowercase()
-            assertTrue(notesString.startsWith("0: note(notetitle=code app, notepriority=4, notecategory=work, isnotearchived=false)"))
+            assertTrue(notesString.startsWith("0: note(notetitle='code app', notepriority=4, notecategory='work', isnotearchived=false)"))
         }
     }
 
@@ -484,10 +485,9 @@ class NoteAPITest {
         fun `notesSortedByCategory returns Notes when ArrayList has active notes stored`() {
             assertEquals(5, populatedNotes!!.numberOfActiveNotes())
             var notesString = populatedNotes!!.listActiveNotes().lowercase()
-            print(notesString)
-            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            assertTrue(notesString.startsWith("0: note(notetitle='learning kotlin', notepriority=5, notecategory='college', isnotearchived=false)"))
             notesString = populatedNotes!!.notesSortedByCategory().lowercase()
-            assertTrue(notesString.startsWith("0: note(notetitle=learning kotlin, notepriority=5, notecategory=college, isnotearchived=false)"))
+            assertTrue(notesString.startsWith("0: note(notetitle='learning kotlin', notepriority=5, notecategory='college', isnotearchived=false)"))
         }
     }
 
@@ -498,14 +498,14 @@ class NoteAPITest {
         fun `listNotesBySelectedCategory returns No Notes when ArrayList is empty`() {
             assertEquals(0, emptyNotes!!.numberOfNotes())
             assertTrue(
-                emptyNotes!!.listNotesBySelectedCategory("Work").lowercase().contains("no notes")
+                emptyNotes!!.searchNotesByCategory("Work").lowercase().contains("no notes")
             )
         }
 
         @Test
         fun `listNotesBySelectedCategory returns no notes when no notes of that priority exist`() {
             assertEquals(5, populatedNotes!!.numberOfNotes())
-            val priority2String = populatedNotes!!.listNotesBySelectedCategory("Home").lowercase()
+            val priority2String = populatedNotes!!.searchNotesByCategory("Home").lowercase()
             assertTrue(priority2String.contains("no notes"))
         }
 
@@ -514,12 +514,12 @@ class NoteAPITest {
             assertEquals(5, populatedNotes!!.numberOfNotes())
             var learnJava:Note = Note("Learning Java", 1, "College", false)
             populatedNotes!!.add(learnJava)
-            val categoryString = populatedNotes!!.listNotesBySelectedCategory("college").lowercase()
+            val categoryString = populatedNotes!!.searchNotesByCategory("college").lowercase()
 
             assertTrue(categoryString.contains("college"))
 
 
-            val priority4String = populatedNotes!!.listNotesBySelectedCategory("Work").lowercase()
+            val priority4String = populatedNotes!!.searchNotesByCategory("Work").lowercase()
             print(priority4String)
             assertTrue(priority4String.contains("4"))
             assertTrue(priority4String.contains("code app"))
@@ -549,6 +549,38 @@ class NoteAPITest {
             assertFalse(populatedNotes!!.findNote(1)!!.isNoteArchived)
             assertTrue(populatedNotes!!.archiveNote(1))
             assertTrue(populatedNotes!!.findNote(1)!!.isNoteArchived)
+        }
+    }
+
+    @Nested
+    inner class CountingMethods {
+
+        @Test
+        fun numberOfNotesCalculatedCorrectly() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+        }
+
+        @Test
+        fun numberOfArchivedNotesCalculatedCorrectly() {
+            assertEquals(0, populatedNotes!!.numberOfArchivedNotes())
+            assertEquals(0, emptyNotes!!.numberOfArchivedNotes())
+        }
+
+        @Test
+        fun numberOfActiveNotesCalculatedCorrectly() {
+            assertEquals(5, populatedNotes!!.numberOfActiveNotes())
+            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
+        }
+
+        @Test
+        fun numberOfNotesByPriorityCalculatedCorrectly() {
+            assertEquals(1, populatedNotes!!.numberOfNotesByPriority(1))
+            assertEquals(0, populatedNotes!!.numberOfNotesByPriority(2))
+            assertEquals(1, populatedNotes!!.numberOfNotesByPriority(3))
+            assertEquals(2, populatedNotes!!.numberOfNotesByPriority(4))
+            assertEquals(1, populatedNotes!!.numberOfNotesByPriority(5))
+            assertEquals(0, emptyNotes!!.numberOfNotesByPriority(1))
         }
     }
 }
