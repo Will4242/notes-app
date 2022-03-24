@@ -73,6 +73,7 @@ fun listNotes() {
                   > |   8) View ordered by title     |
                   > |   9) View ordered by category  |
                   > |  10) Search category           |
+                  > |  11) Search title              |
                   > ----------------------------------
          > ==>> """.trimMargin(">"))
 
@@ -87,6 +88,7 @@ fun listNotes() {
             8  -> notesSortedByTitle();
             9  -> notesSortedByCategory();
             10 -> searchNotesByCategory();
+            /*11 -> searchNotesByTitle();*/
             else -> println("Invalid option entered: " + option);
         }
     } else {
@@ -207,7 +209,16 @@ fun searchNotesByCategory(){
     val chosenCategory=ScannerInput.readNextLine("Enter category ")
     println(noteAPI.searchNotesByCategory(chosenCategory))
     println("There are ${noteAPI.numberOfNotesByCategory(chosenCategory)} notes for this category")
-}
+}/*
+fun searchNotesByTitle() {
+    val searchTitle = readNextLine("Enter the description to search by: ")
+    val searchResults = noteAPI.searchNotesByTitle(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}*/
 fun archiveNote() {
     listActiveNotes()
     if (noteAPI.numberOfActiveNotes() > 0) {

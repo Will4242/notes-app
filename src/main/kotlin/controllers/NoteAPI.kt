@@ -193,6 +193,11 @@ class NoteAPI(serializerType: Serializer){
         }
     }
 
+   /* fun searchNotesByTitle(searchString : String) =
+        notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true)}
+            .joinToString (separator = "\n") {
+                    note ->  notes.indexOf(note).toString() + ": " + note.toString() }*/
+
     fun numberOfNotesByCategory(category: String): Int {
         return notes.count ({ it.noteCategory==category })
     }
