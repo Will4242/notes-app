@@ -218,6 +218,7 @@ fun searchNotesByCategory() {
         println("No notes found")
     } else {
         println(searchResults)
+        println("There are ${noteAPI.numberOfNotesByCategory(searchCategory)} notes for this category")
     }
 }
 fun searchNotesByTitle() {

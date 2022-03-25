@@ -147,9 +147,9 @@ class NoteAPI(serializerType: Serializer){
         }
     }*/
 
-    /*fun numberOfNotesByCategory(category: String): Int {
-        return notes.count ({ it.noteCategory==category })
-    }*/
+    fun numberOfNotesByCategory(category: String): Int {
+        return notes.count { it.noteCategory == category }
+    }
 
     fun searchNotesByCategory(category: String): String =
         notes.filter { note -> note.noteCategory.contains(category, ignoreCase = true)}
