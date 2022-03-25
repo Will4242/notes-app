@@ -72,21 +72,7 @@ class NoteAPI(serializerType: Serializer){
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
-/*
-    fun listActiveNotes(): String {
-            return if (notes.isEmpty()) {
-                "No notes stored"
-            } else {
-                var listOfNotes = ""
-                for (i in notes.indices) {
-                    if(!notes[i].isNoteArchived)
-                    listOfNotes += "${i}: ${notes[i]} \n"
-                }
-                if(listOfNotes.isEmpty())
-                    "no active notes"
-                else listOfNotes
-            }
-    }*/
+
     fun listActiveNotes(): String =
     if  (notes.isEmpty()) "No notes stored"
     else {
@@ -99,22 +85,6 @@ class NoteAPI(serializerType: Serializer){
 
         }
 
-
-   /* //took out explanation mark to list archive
-    fun listArchivedNotes(): String {
-        return if (notes.isEmpty()) {
-            "No notes stored"
-        } else {
-            var listOfNotes = ""
-            for (i in notes.indices) {
-                if(notes[i].isNoteArchived)
-                    listOfNotes += "${i}: ${notes[i]} \n"
-            }
-            if(listOfNotes.isEmpty())
-                "no archived notes"
-            else listOfNotes
-        }
-    }*/
     fun listArchivedNotes(): String =
         if  (notes.isEmpty()) "No notes stored"
         else{
@@ -132,22 +102,6 @@ class NoteAPI(serializerType: Serializer){
         return notes.count({!it.isNoteArchived})
     }
 
-    /*fun listNotesBySelectedPriority(priority: Int): String {
-
-        return if (notes.isEmpty()) {
-            "No notes stored"
-        } else {
-            var listOfNotes = ""
-            for (i in notes.indices) {
-
-                if(notes[i].notePriority==priority)
-                    listOfNotes += "${i}: ${notes[i]} \n"
-            }
-           if(!listOfNotes.isEmpty())
-               listOfNotes
-            else "No notes fpr priority ${priority}"
-    }
-}*/
     fun listNotesBySelectedPriority(priority: Int): String =
         if  (notes.isEmpty()) "No notes stored"
         else{
