@@ -22,8 +22,8 @@ class NoteAPITest {
     private var codeApp: Note? = null
     private var testApp: Note? = null
     private var swim: Note? = null
-    private var populatedNotes: NoteAPI? = NoteAPI(XMLSerializer(File("notes.xml")))
-    private var emptyNotes: NoteAPI? = NoteAPI(XMLSerializer(File("notes.xml")))
+    private var populatedNotes: NoteAPI? = NoteAPI(YAMLSerializer(File("notesTest.yaml")))
+    private var emptyNotes: NoteAPI? = NoteAPI(YAMLSerializer(File("notesTest.yaml")))
 
     @BeforeEach
     fun setup() {
@@ -371,11 +371,11 @@ class NoteAPITest {
         @Test
         fun `saving and loading an empty collection in YAML doesn't crash app`() {
             // Saving an empty notes.yaml file.
-            val storingNotes = NoteAPI(YAMLSerializer(File("notes.yaml")))
+            val storingNotes = NoteAPI(YAMLSerializer(File("notesTest.yaml")))
             storingNotes.store()
 
             //Loading the empty notes.yaml file into a new object
-            val loadedNotes = NoteAPI(YAMLSerializer(File("notes.yaml")))
+            val loadedNotes = NoteAPI(YAMLSerializer(File("notesTest.yaml")))
             loadedNotes.load()
 
             //Comparing the source of the notes (storingNotes) with the yaml loaded notes (loadedNotes)
@@ -387,14 +387,14 @@ class NoteAPITest {
         @Test
         fun `saving and loading an loaded collection in YAML doesn't loose data`() {
             // Storing 3 notes to the notes.yaml file.
-            val storingNotes = NoteAPI(YAMLSerializer(File("notes.yaml")))
+            val storingNotes = NoteAPI(YAMLSerializer(File("notesTest.yaml")))
             storingNotes.add(testApp!!)
             storingNotes.add(swim!!)
             storingNotes.add(summerHoliday!!)
             storingNotes.store()
 
             //Loading notes.yaml into a different collection
-            val loadedNotes = NoteAPI(YAMLSerializer(File("notes.yaml")))
+            val loadedNotes = NoteAPI(YAMLSerializer(File("notesTest.yaml")))
             loadedNotes.load()
 
             //Comparing the source of the notes (storingNotes) with the yaml loaded notes (loadedNotes)
