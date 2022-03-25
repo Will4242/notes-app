@@ -383,7 +383,7 @@ class NoteAPITest {
             assertEquals(0, loadedNotes.numberOfNotes())
             assertEquals(storingNotes.numberOfNotes(), loadedNotes.numberOfNotes())
         }
-/*
+
         @Test
         fun `saving and loading an loaded collection in YAML doesn't loose data`() {
             // Storing 3 notes to the notes.yaml file.
@@ -402,10 +402,10 @@ class NoteAPITest {
             assertEquals(3, loadedNotes.numberOfNotes())
             assertEquals(storingNotes.numberOfNotes(), loadedNotes.numberOfNotes())
             print(loadedNotes.findNote(0))
-           // assertEquals(storingNotes.findNote(0),loadedNotes.findNote(0))
-            //assertEquals(storingNotes.findNote(1), loadedNotes.findNote(1))
-            //assertEquals(storingNotes.findNote(2), loadedNotes.findNote(2))
-        }*/
+            assertEquals(storingNotes.findNote(0),loadedNotes.findNote(0))
+            assertEquals(storingNotes.findNote(1), loadedNotes.findNote(1))
+            assertEquals(storingNotes.findNote(2), loadedNotes.findNote(2))
+        }
     }
 
     @Nested
