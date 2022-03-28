@@ -20,6 +20,10 @@ class NoteAPI(serializerType: Serializer){
         serializer.write(notes)
     }
 
+    fun formatListString(notesToFormat : List<Note>) : String =
+        notesToFormat
+            .joinToString (separator = "\n") { note ->
+                notes.indexOf(note).toString() + ": " + note.toString() }
 
     private var notes = ArrayList<Note>()
 
