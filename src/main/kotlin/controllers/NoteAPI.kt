@@ -160,9 +160,9 @@ class NoteAPI(serializerType: Serializer){
     }
 
     fun searchNotesByCategory(category: String): String =
-        notes.filter { note -> note.noteCategory.contains(category, ignoreCase = true)}.sortedBy { it.notePriority }
-            .joinToString (separator = "\n") {
-                    note ->  notes.indexOf(note).toString() + ": " + note.toString() }
+        formatListString(
+            notes.filter { note -> note.noteCategory.contains(category, ignoreCase = true)}.sortedBy { it.notePriority })
+
 
     fun searchNotesByTitle (searchString : String) =
         formatListString(
