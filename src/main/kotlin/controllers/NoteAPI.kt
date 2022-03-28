@@ -77,16 +77,8 @@ class NoteAPI(serializerType: Serializer){
     }
 
     fun listActiveNotes(): String =
-    if  (notes.isEmpty()) "No notes stored"
-    else {
-        val notes2 = notes.filter { !it.isNoteArchived }
-        if(!notes2.isEmpty()){
-            notes2.joinToString(separator = "\n") { note ->
-            notes.indexOf(note).toString() + ": " + note.toString()}}
-        else "no active notes"
-
-
-        }
+        if  (numberOfActiveNotes() == 0)  "No active notes stored"
+        else formatListString(notes.filter { note -> !note.isNoteArchived})
 
     fun listArchivedNotes(): String =
         if  (notes.isEmpty()) "No notes stored"
