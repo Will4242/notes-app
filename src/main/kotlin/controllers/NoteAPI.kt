@@ -93,15 +93,8 @@ class NoteAPI(serializerType: Serializer){
     }
 
     fun listNotesBySelectedPriority(priority: Int): String =
-        if  (notes.isEmpty()) "No notes stored"
-        else{
-            if (numberOfNotesByPriority(priority)==0) "No notes fpr priority ${priority}"
-            else{notes.filter { note -> note.notePriority==priority}
-                .joinToString (separator = "\n") {
-                        note ->  notes.indexOf(note).toString() + ": " + note.toString() }}}
-
-
-
+        formatListString(
+            notes.filter { note -> note.notePriority==priority})
 
     fun numberOfNotesByPriority(priority: Int): Int{
         return notes.count({it.notePriority==priority})
