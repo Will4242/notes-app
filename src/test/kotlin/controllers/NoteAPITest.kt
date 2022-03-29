@@ -98,11 +98,6 @@ class NoteAPITest {
     @Nested
     inner class ListActiveNotes {
 
-        @Test
-        fun `listActiveNotes returns No Notes Stored message when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(emptyNotes!!.listActiveNotes().lowercase().contains("no notes"))
-        }
 
         @Test
         fun `listActiveNotes returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
@@ -126,12 +121,6 @@ class NoteAPITest {
 
     @Nested
     inner class ListArchivedNotes {
-
-        @Test
-        fun `listArchivedNotes returns No Notes Stored message when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(emptyNotes!!.listArchivedNotes().lowercase().contains("no notes"))
-        }
 
         @Test
         fun `listArchivedNotes returns No Archived Notes Stored message when no Archive Notes but ArrayList is not empty`() {
@@ -158,12 +147,6 @@ class NoteAPITest {
     inner class numberOfArchivedNotes {
 
         @Test
-        fun `numberOfArchivedNotes returns No Notes Stored message when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(emptyNotes!!.listArchivedNotes().lowercase().contains("no notes"))
-        }
-
-        @Test
         fun `numberOfArchivedNotes returns No Archived Notes Stored message when no Archive Notes but ArrayList is not empty`() {
             assertEquals(0, emptyNotes!!.numberOfArchivedNotes())
             var testArchiveNote = Note("clean up", 2, "Work", false)
@@ -183,12 +166,6 @@ class NoteAPITest {
     inner class numberOfActiveNotes {
 
         @Test
-        fun `numberOfActiveNotes returns No Notes Stored message when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(emptyNotes!!.listActiveNotes().lowercase().contains("no notes"))
-        }
-
-        @Test
         fun `listActiveNotes returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
             assertEquals(0, emptyNotes!!.numberOfActiveNotes())
             var testArchiveNote = Note("paint", 1, "Work", true)
@@ -206,23 +183,6 @@ class NoteAPITest {
 
     @Nested
     inner class listNotesBySelectedPriority {
-
-        @Test
-        fun `listNotesBySelectedPriority returns No Notes when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(
-                emptyNotes!!.listNotesBySelectedPriority(1).lowercase().contains("no notes")
-            )
-        }
-
-        @Test
-        fun `listNotesBySelectedPriority returns no notes when no notes of that priority exist`() {
-            //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
-            assertEquals(5, populatedNotes!!.numberOfNotes())
-            val priority2String = populatedNotes!!.listNotesBySelectedPriority(2).lowercase()
-            assertTrue(priority2String.contains("no notes"))
-            assertTrue(priority2String.contains("2"))
-        }
 
         @Test
         fun `listNotesBySelectedPriority returns all notes that match that priority when notes of that priority exist`() {
@@ -412,12 +372,6 @@ class NoteAPITest {
     inner class notesSortedByPriority {
 
         @Test
-        fun `notesSortedByPriority returns No Notes Stored message when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(emptyNotes!!.notesSortedByPriority().lowercase().contains("no notes"))
-        }
-
-        @Test
         fun `notesSortedByPriority returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
             assertEquals(0, emptyNotes!!.numberOfActiveNotes())
             var testArchiveNote = Note("wash hair", 1, "Work", true)
@@ -441,12 +395,6 @@ class NoteAPITest {
     inner class notesSortedByTitle {
 
         @Test
-        fun `notesSortedByTitle returns No Notes Stored message when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(emptyNotes!!.notesSortedByTitle().lowercase().contains("no notes"))
-        }
-
-        @Test
         fun `notesSortedByTitle returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
             assertEquals(0, emptyNotes!!.numberOfActiveNotes())
             var testArchiveNote = Note("wash hair", 1, "Work", true)
@@ -466,12 +414,6 @@ class NoteAPITest {
 
     @Nested
     inner class notesSortedByCategory {
-
-        @Test
-        fun `notesSortedByCategory returns No Notes Stored message when ArrayList is empty`() {
-            assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(emptyNotes!!.notesSortedByCategory().lowercase().contains("no notes"))
-        }
 
         @Test
         fun `notesSortedByCategory returns No Active Notes Stored message when no Active Notes but ArrayList is not empty`() {
