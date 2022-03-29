@@ -1,10 +1,14 @@
 package models
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 data class Note(
     var noteTitle: String,
     var notePriority: Int,
     var noteCategory: String,
-    var isNoteArchived :Boolean){
+    @get : JsonProperty ("isNoteArchived") var isNoteArchived :Boolean){
+
+
     override fun toString(): String {
         return "Note(noteTitle='$noteTitle', notePriority=$notePriority, noteCategory='$noteCategory', isNoteArchived=$isNoteArchived)"
     }
