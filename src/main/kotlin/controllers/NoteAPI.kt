@@ -3,6 +3,7 @@ package controllers
 import listNotes
 import models.Note
 import persistence.Serializer
+import utils.Helper.isValidListIndex
 import utils.ScannerInput.readNextInt
 import kotlin.math.sign
 
@@ -72,10 +73,7 @@ class NoteAPI(serializerType: Serializer){
         } else null
     }
 
-    //utility method to determine if an index is valid in a list.
-    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-        return (index >= 0 && index < list.size)
-    }
+
 
     fun listActiveNotes(): String =
         if  (numberOfActiveNotes() == 0)  "No active notes stored"
