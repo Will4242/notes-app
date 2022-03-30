@@ -48,6 +48,7 @@ class NoteAPI(serializerType: Serializer){
         //if the note exists, use the note details passed as parameters to update the found note in the ArrayList.
         if ((foundNote != null) && (note != null)) {
             foundNote.noteTitle = note.noteTitle
+            foundNote.noteStatus = note.noteStatus
             foundNote.notePriority = note.notePriority
             foundNote.noteCategory = note.noteCategory
             return true
@@ -157,4 +158,7 @@ class NoteAPI(serializerType: Serializer){
         }
         return false
     }
+    fun searchNotesByStatus (status : String) =
+        formatListString(
+            notes.filter { note -> note.noteStatus.contains(status, ignoreCase = true) })
 }

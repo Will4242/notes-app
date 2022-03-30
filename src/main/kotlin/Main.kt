@@ -12,8 +12,8 @@ import java.lang.System.exit
 
 
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
-private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
-//private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
+//private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
+private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
 
 private val logger = KotlinLogging.logger {}
 
@@ -74,6 +74,7 @@ fun listNotes() {
                   > |   9) View ordered by category  |
                   > |  10) Search category           |
                   > |  11) Search title              |
+                  > |  12) Search status             |
                   > ----------------------------------
          > ==>> """.trimMargin(">"))
 
@@ -89,6 +90,7 @@ fun listNotes() {
             9  -> notesSortedByCategory();
             10 -> searchNotesByCategory();
             11 -> searchNotesByTitle();
+            12 -> searchNotesByStatus();
             else -> println("Invalid option entered: " + option);
         }
     } else {
@@ -97,7 +99,7 @@ fun listNotes() {
 }
 
 
-    fun save() {
+fun save() {
         try {
             noteAPI.store()
         } catch (e: Exception) {
@@ -116,9 +118,10 @@ fun listNotes() {
 fun addNote(){
     //logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
+    val noteStatus = readNextLine("Enter a status for the note: ")
     val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     val noteCategory = readNextLine("Enter a category for the note: ")
-    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
+    val isAdded = noteAPI.add(Note(noteTitle, noteStatus, notePriority, noteCategory, false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -140,11 +143,12 @@ fun updateNote() {
         val indexToUpdate = readNextInt("Enter the index of the note to update: ")
         if (noteAPI.isValidIndex(indexToUpdate)) {
             val noteTitle = readNextLine("Enter a title for the note: ")
+            val noteStatus = readNextLine("Enter a status for the note: ")
             val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
             val noteCategory = readNextLine("Enter a category for the note: ")
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, notePriority, noteCategory, false))){
+            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteStatus, notePriority, noteCategory, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -241,3 +245,11 @@ fun archiveNote() {
         }
     }
 }
+    fun searchNotesByStatus() {
+        val searchStatus = readNextLine("Enter the status to search by: ")
+        val searchResults = noteAPI.searchNotesByStatus(searchStatus)
+        if (searchResults.isEmpty()) {
+            println("No notes found")
+}
+    }
+
