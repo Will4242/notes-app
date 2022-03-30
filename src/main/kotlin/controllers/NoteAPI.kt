@@ -3,6 +3,7 @@ package controllers
 import listNotes
 import models.Note
 import persistence.Serializer
+import utils.Helper.isValidListIndex
 import utils.ScannerInput.readNextInt
 import kotlin.math.sign
 
@@ -48,6 +49,7 @@ class NoteAPI(serializerType: Serializer){
         //if the note exists, use the note details passed as parameters to update the found note in the ArrayList.
         if ((foundNote != null) && (note != null)) {
             foundNote.noteTitle = note.noteTitle
+            foundNote.noteStatus = note.noteStatus
             foundNote.notePriority = note.notePriority
             foundNote.noteCategory = note.noteCategory
             return true
@@ -69,11 +71,6 @@ class NoteAPI(serializerType: Serializer){
         return if (isValidListIndex(index, notes)) {
             notes[index]
         } else null
-    }
-
-    //utility method to determine if an index is valid in a list.
-    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-        return (index >= 0 && index < list.size)
     }
 
     fun listActiveNotes(): String =
@@ -108,31 +105,12 @@ class NoteAPI(serializerType: Serializer){
     fun notesSortedByTitle(): String{
         notes.sortBy { it.noteTitle }
         return listActiveNotes()
-}
+    }
 
     fun notesSortedByCategory(): String{
         notes.sortBy { it.noteCategory }
         return listActiveNotes()
     }
-
-    /*fun searchNotesByCategory(category: String): String {
-
-        return if (notes.isEmpty()) {
-            "No notes stored"
-        } else {
-            notes.sortBy { it.notePriority }
-
-            var listOfNotes = ""
-            for (i in notes.indices) {
-
-                if(notes[i].noteCategory.lowercase().equals(category.lowercase()))
-                    listOfNotes += "${i}: ${notes[i]} \n"
-            }
-            if(!listOfNotes.isEmpty())
-                listOfNotes
-            else "No notes for category ${category}"
-        }
-    }*/
 
     fun numberOfNotesByCategory(category: String): Int {
         return notes.count { it.noteCategory == category }
@@ -142,10 +120,13 @@ class NoteAPI(serializerType: Serializer){
         formatListString(
             notes.filter { note -> note.noteCategory.contains(category, ignoreCase = true)}.sortedBy { it.notePriority })
 
-
     fun searchNotesByTitle (searchString : String) =
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
+
+    fun searchNotesByStatus (status : String) =
+        formatListString(
+            notes.filter { note -> note.noteStatus.contains(status, ignoreCase = true) })
 
     fun archiveNote(indexToArchive: Int): Boolean {
         if (isValidIndex(indexToArchive)) {
@@ -157,4 +138,6 @@ class NoteAPI(serializerType: Serializer){
         }
         return false
     }
+
+
 }

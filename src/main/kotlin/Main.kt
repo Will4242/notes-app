@@ -3,6 +3,7 @@ import models.Note
 import mu.KotlinLogging
 import persistence.JSONSerializer
 import persistence.YAMLSerializer
+import utils.Helper.isValidPriority
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -12,8 +13,8 @@ import java.lang.System.exit
 
 
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
-private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
-//private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
+//private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
+private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
 
 private val logger = KotlinLogging.logger {}
 
@@ -74,6 +75,7 @@ fun listNotes() {
                   > |   9) View ordered by category  |
                   > |  10) Search category           |
                   > |  11) Search title              |
+                  > |  12) Search status             |
                   > ----------------------------------
          > ==>> """.trimMargin(">"))
 
@@ -89,6 +91,7 @@ fun listNotes() {
             9  -> notesSortedByCategory();
             10 -> searchNotesByCategory();
             11 -> searchNotesByTitle();
+            12 -> searchNotesByStatus();
             else -> println("Invalid option entered: " + option);
         }
     } else {
@@ -97,7 +100,7 @@ fun listNotes() {
 }
 
 
-    fun save() {
+fun save() {
         try {
             noteAPI.store()
         } catch (e: Exception) {
@@ -116,10 +119,14 @@ fun listNotes() {
 fun addNote(){
     //logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
-    val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-    val noteCategory = readNextLine("Enter a category for the note: ")
-    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
+    val noteStatus = readNextLine("Enter a status for the note: ")
 
+    var notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+        while (!isValidPriority(notePriority)){
+            notePriority = readNextInt("Invalid priority, try again (1-low, 2, 3, 4, 5-high): ")
+        }
+    val noteCategory = readNextLine("Enter a category for the note: ")
+    val isAdded = noteAPI.add(Note(noteTitle, noteStatus, notePriority, noteCategory, false))
     if (isAdded) {
         println("Added Successfully")
     } else {
@@ -134,17 +141,18 @@ fun listAllNotes(){
 
 fun updateNote() {
     //logger.info { "updateNotes() function invoked" }
-    listNotes()
+    listAllNotes()
     if (noteAPI.numberOfNotes() > 0) {
         //only ask the user to choose the note if notes exist
         val indexToUpdate = readNextInt("Enter the index of the note to update: ")
         if (noteAPI.isValidIndex(indexToUpdate)) {
             val noteTitle = readNextLine("Enter a title for the note: ")
+            val noteStatus = readNextLine("Enter a status for the note: ")
             val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
             val noteCategory = readNextLine("Enter a category for the note: ")
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, notePriority, noteCategory, false))){
+            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteStatus, notePriority, noteCategory, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -187,30 +195,29 @@ fun listArchivedNotes() {
 fun numberOfArchivedNotes() {
     println(noteAPI.numberOfArchivedNotes())
 }
+
 fun numberOfActiveNotes() {
     println(noteAPI.numberOfActiveNotes())
 }
+
 fun listNotesBySelectedPriority(){
     val chosenPriority=ScannerInput.readNextInt("Enter priority ")
     println(noteAPI.listNotesBySelectedPriority(chosenPriority))
     println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} notes for this priority")
 }
+
 fun notesSortedByPriority(){
     println(noteAPI.notesSortedByPriority())
 }
+
 fun notesSortedByTitle(){
     println(noteAPI.notesSortedByTitle())
 }
+
 fun notesSortedByCategory(){
     println(noteAPI.notesSortedByCategory())
 }
-/*
-//lists selected category ordered by priority with number of notes in that category
-fun searchNotesByCategory(){
-    val chosenCategory=ScannerInput.readNextLine("Enter category ")
-    println(noteAPI.searchNotesByCategory(chosenCategory))
-    println("There are ${noteAPI.numberOfNotesByCategory(chosenCategory)} notes for this category")
-}*/
+
 fun searchNotesByCategory() {
     val searchCategory = readNextLine("Enter the category to search by: ")
     val searchResults = noteAPI.searchNotesByCategory(searchCategory)
@@ -221,6 +228,7 @@ fun searchNotesByCategory() {
         println("There are ${noteAPI.numberOfNotesByCategory(searchCategory)} notes for this category")
     }
 }
+
 fun searchNotesByTitle() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = noteAPI.searchNotesByTitle(searchTitle)
@@ -230,6 +238,17 @@ fun searchNotesByTitle() {
         println(searchResults)
     }
 }
+
+fun searchNotesByStatus() {
+    val searchStatus = readNextLine("Enter the status to search by: ")
+    val searchResults = noteAPI.searchNotesByStatus(searchStatus)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
 fun archiveNote() {
     listActiveNotes()
     if (noteAPI.numberOfActiveNotes() > 0) {
@@ -241,3 +260,6 @@ fun archiveNote() {
         }
     }
 }
+
+
+
