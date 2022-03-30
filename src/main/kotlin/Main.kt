@@ -127,14 +127,13 @@ fun addNote(){
         }
     val noteCategory = readNextLine("Enter a category for the note: ")
     val isAdded = noteAPI.add(Note(noteTitle, noteStatus, notePriority, noteCategory, false))
-
     if (isAdded) {
         println("Added Successfully")
     } else {
         println("Add Failed")
     }
 }
-//
+
 fun listAllNotes(){
     //logger.info { "listNotes() function invoked" }
     println(noteAPI.listAllNotes())
@@ -142,7 +141,7 @@ fun listAllNotes(){
 
 fun updateNote() {
     //logger.info { "updateNotes() function invoked" }
-    listNotes()
+    listAllNotes()
     if (noteAPI.numberOfNotes() > 0) {
         //only ask the user to choose the note if notes exist
         val indexToUpdate = readNextInt("Enter the index of the note to update: ")
@@ -196,30 +195,29 @@ fun listArchivedNotes() {
 fun numberOfArchivedNotes() {
     println(noteAPI.numberOfArchivedNotes())
 }
+
 fun numberOfActiveNotes() {
     println(noteAPI.numberOfActiveNotes())
 }
+
 fun listNotesBySelectedPriority(){
     val chosenPriority=ScannerInput.readNextInt("Enter priority ")
     println(noteAPI.listNotesBySelectedPriority(chosenPriority))
     println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} notes for this priority")
 }
+
 fun notesSortedByPriority(){
     println(noteAPI.notesSortedByPriority())
 }
+
 fun notesSortedByTitle(){
     println(noteAPI.notesSortedByTitle())
 }
+
 fun notesSortedByCategory(){
     println(noteAPI.notesSortedByCategory())
 }
-/*
-//lists selected category ordered by priority with number of notes in that category
-fun searchNotesByCategory(){
-    val chosenCategory=ScannerInput.readNextLine("Enter category ")
-    println(noteAPI.searchNotesByCategory(chosenCategory))
-    println("There are ${noteAPI.numberOfNotesByCategory(chosenCategory)} notes for this category")
-}*/
+
 fun searchNotesByCategory() {
     val searchCategory = readNextLine("Enter the category to search by: ")
     val searchResults = noteAPI.searchNotesByCategory(searchCategory)
@@ -230,6 +228,7 @@ fun searchNotesByCategory() {
         println("There are ${noteAPI.numberOfNotesByCategory(searchCategory)} notes for this category")
     }
 }
+
 fun searchNotesByTitle() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = noteAPI.searchNotesByTitle(searchTitle)
@@ -239,6 +238,17 @@ fun searchNotesByTitle() {
         println(searchResults)
     }
 }
+
+fun searchNotesByStatus() {
+    val searchStatus = readNextLine("Enter the status to search by: ")
+    val searchResults = noteAPI.searchNotesByStatus(searchStatus)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
 fun archiveNote() {
     listActiveNotes()
     if (noteAPI.numberOfActiveNotes() > 0) {
@@ -250,11 +260,6 @@ fun archiveNote() {
         }
     }
 }
-    fun searchNotesByStatus() {
-        val searchStatus = readNextLine("Enter the status to search by: ")
-        val searchResults = noteAPI.searchNotesByStatus(searchStatus)
-        if (searchResults.isEmpty()) {
-            println("No notes found")
-}
-    }
+
+
 
