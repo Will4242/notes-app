@@ -152,5 +152,4 @@ class NoteAPI(serializerType: Serializer){
         //if the note was not found, return false, indicating that the update was not successful
         return false
     }
-
 }
