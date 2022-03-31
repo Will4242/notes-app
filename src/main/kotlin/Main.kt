@@ -1,7 +1,6 @@
 import controllers.NoteAPI
 import models.Note
 import mu.KotlinLogging
-import persistence.JSONSerializer
 import persistence.YAMLSerializer
 import utils.Helper.isValidCategory
 import utils.Helper.isValidPriority
@@ -36,8 +35,9 @@ fun mainMenu() : Int {
          > |   3) Update a note             |
          > |   4) Delete a note             |
          > |   5) Archive a note            |
-         > |   6) save                      |
-         > |   7) load                      |
+         > |   6) Update Status
+         > |   7) save                      |
+         > |   8) load                      |
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -53,8 +53,9 @@ fun runMenu() {
             3  -> updateNote()
             4  -> deleteNote()
             5  -> archiveNote()
-            6  -> save()
-            7  -> load()
+            6  -> updateStatus()
+            7  -> save()
+            8  -> load()
             0  -> exitApp()
             else -> System.out.println("Invalid option entered: ${option}")
         }
@@ -124,12 +125,12 @@ fun addNote(){
 
     var noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
     while (!isValidStatus(noteStatus)){
-        noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
+        noteStatus = readNextLine("Invalid status, enter a status for the note (ToDo, Doing, Done: ")
     }
 
     var notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     while (!isValidPriority(notePriority)){
-        notePriority = readNextInt("Invalid priority, try again (1-low, 2, 3, 4, 5-high): ")
+        notePriority = readNextInt("Invalid priority, enter a priority (1-low, 2, 3, 4, 5-high): ")
     }
 
     var noteCategory = readNextLine("Enter a category for the note (Work,College,Home,Sport,Holiday): ")
@@ -158,9 +159,21 @@ fun updateNote() {
         val indexToUpdate = readNextInt("Enter the index of the note to update: ")
         if (noteAPI.isValidIndex(indexToUpdate)) {
             val noteTitle = readNextLine("Enter a title for the note: ")
-            val noteStatus = readNextLine("Enter a status for the note: ")
-            val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-            val noteCategory = readNextLine("Enter a category for the note: ")
+
+            var noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
+            while (!isValidStatus(noteStatus)){
+                noteStatus = readNextLine("Invalid status, enter a status for the note (ToDo, Doing, Done: ")
+            }
+
+            var notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+            while (!isValidPriority(notePriority)){
+                notePriority = readNextInt("Invalid priority, enter a priority (1-low, 2, 3, 4, 5-high): ")
+            }
+
+            var noteCategory = readNextLine("Enter a category for the note (Work,College,Home,Sport,Holiday): ")
+            while (!isValidCategory(noteCategory)){
+                noteCategory = readNextLine("Invalid category, enter a category (Work,College,Home,Sport,Holiday): ")
+            }
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
             if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteStatus, notePriority, noteCategory, false))){
@@ -271,6 +284,26 @@ fun archiveNote() {
         }
     }
 }
+fun updateStatus() {
+    listAllNotes()
+    if (noteAPI.numberOfNotes() > 0) {
+        val indexToStatus = readNextInt("Enter the index of the note to update: ")
+        if (noteAPI.isValidIndex(indexToStatus)) {
+            var noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
+            while (!isValidStatus(noteStatus)){
+                noteStatus = readNextLine("Invalid status, enter a status for the note (ToDo, Doing, Done: ")
+            }
+            if (noteAPI.updateStatus(indexToStatus, noteStatus)){
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("There are no notes for this index number")
+        }
+    }
+}
+
 
 
 
