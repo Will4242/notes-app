@@ -116,7 +116,7 @@ class NoteAPI(serializerType: Serializer){
         return notes.count { it.noteCategory == category }
     }
 
-    fun searchNotesByCategory(category: String): String =
+    fun searchNotesByCategory(category: String) =
         formatListString(
             notes.filter { note -> note.noteCategory.contains(category, ignoreCase = true)}.sortedBy { it.notePriority })
 
@@ -139,5 +139,17 @@ class NoteAPI(serializerType: Serializer){
         return false
     }
 
+    fun updateStatus(indexToStatus: Int, status: String): Boolean {
+        //find the note object by the index number
+        val foundNote = findNote(indexToStatus)
 
+        //if the note exists, use the note details passed as parameters to update the found note in the ArrayList.
+        if ((foundNote != null) ) {
+            foundNote.noteStatus = status
+            return true
+        }
+
+        //if the note was not found, return false, indicating that the update was not successful
+        return false
+    }
 }
