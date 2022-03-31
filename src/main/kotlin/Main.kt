@@ -3,6 +3,7 @@ import models.Note
 import mu.KotlinLogging
 import persistence.JSONSerializer
 import persistence.YAMLSerializer
+import utils.Helper.isValidCategory
 import utils.Helper.isValidPriority
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
@@ -122,10 +123,15 @@ fun addNote(){
     val noteStatus = readNextLine("Enter a status for the note: ")
 
     var notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-        while (!isValidPriority(notePriority)){
-            notePriority = readNextInt("Invalid priority, try again (1-low, 2, 3, 4, 5-high): ")
-        }
-    val noteCategory = readNextLine("Enter a category for the note: ")
+    while (!isValidPriority(notePriority)){
+        notePriority = readNextInt("Invalid priority, try again (1-low, 2, 3, 4, 5-high): ")
+    }
+
+    var noteCategory = readNextLine("Enter a category for the note (work,college,home,sport,holiday): ")
+    while (!isValidCategory(noteCategory)){
+        noteCategory = readNextLine("Invalid category, enter a category (work,college,home,sport,holiday): ")
+    }
+
     val isAdded = noteAPI.add(Note(noteTitle, noteStatus, notePriority, noteCategory, false))
     if (isAdded) {
         println("Added Successfully")

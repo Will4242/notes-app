@@ -10,4 +10,10 @@ object Helper {
     fun isValidPriority(priority: Int): Boolean {
         return (priority in 1..5)
     }
+    @JvmStatic
+    fun isValidCategory(category: String): Boolean {
+        var categories = listOf("work","college","home","sport","holidays")
+        return categories.contains(category.lowercase())
+    }
+
 }

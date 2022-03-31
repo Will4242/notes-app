@@ -139,5 +139,4 @@ class NoteAPI(serializerType: Serializer){
         return false
     }
 
-
 }
