@@ -5,6 +5,7 @@ import persistence.JSONSerializer
 import persistence.YAMLSerializer
 import utils.Helper.isValidCategory
 import utils.Helper.isValidPriority
+import utils.Helper.isValidStatus
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -120,16 +121,20 @@ fun save() {
 fun addNote(){
     //logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
-    val noteStatus = readNextLine("Enter a status for the note: ")
+
+    var noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
+    while (!isValidStatus(noteStatus)){
+        noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
+    }
 
     var notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     while (!isValidPriority(notePriority)){
         notePriority = readNextInt("Invalid priority, try again (1-low, 2, 3, 4, 5-high): ")
     }
 
-    var noteCategory = readNextLine("Enter a category for the note (work,college,home,sport,holiday): ")
+    var noteCategory = readNextLine("Enter a category for the note (Work,College,Home,Sport,Holiday): ")
     while (!isValidCategory(noteCategory)){
-        noteCategory = readNextLine("Invalid category, enter a category (work,college,home,sport,holiday): ")
+        noteCategory = readNextLine("Invalid category, enter a category (Work,College,Home,Sport,Holiday): ")
     }
 
     val isAdded = noteAPI.add(Note(noteTitle, noteStatus, notePriority, noteCategory, false))

@@ -116,7 +116,7 @@ class NoteAPI(serializerType: Serializer){
         return notes.count { it.noteCategory == category }
     }
 
-    fun searchNotesByCategory(category: String): String =
+    fun searchNotesByCategory(category: String) =
         formatListString(
             notes.filter { note -> note.noteCategory.contains(category, ignoreCase = true)}.sortedBy { it.notePriority })
 
