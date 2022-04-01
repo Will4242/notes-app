@@ -1,6 +1,7 @@
 import controllers.NoteAPI
 import models.Note
 import mu.KotlinLogging
+import persistence.JSONSerializer
 import persistence.YAMLSerializer
 import utils.Helper.isValidCategory
 import utils.Helper.isValidPriority
@@ -12,8 +13,8 @@ import java.io.File
 import java.lang.System.exit
 
 // private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
-// private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
-private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
+ private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
+//private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
 
 private val logger = KotlinLogging.logger {}
 
@@ -188,7 +189,7 @@ fun updateNote() {
 
 fun deleteNote() {
     // logger.info { "deleteNotes() function invoked" }
-    listNotes()
+    listAllNotes()
     if (noteAPI.numberOfNotes() > 0) {
         // only ask the user to choose the note to delete if notes exist
         val indexToDelete = readNextInt("Enter the index of the note to delete: ")
