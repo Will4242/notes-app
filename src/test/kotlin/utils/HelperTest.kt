@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import utils.Helper.categories
 import utils.Helper.isValidCategory
+import utils.Helper.isValidPriority
 import utils.Helper.isValidStatus
 import utils.Helper.statuses
 
@@ -66,5 +67,23 @@ internal class HelperTest {
             Assertions.assertFalse(isValidStatus(""))
         }
     }
+    @Nested
+    inner class PriorityVal {
 
+        @Test
+        fun isValidPriorityTrueWhenPriorityExists() {
+            Assertions.assertTrue(isValidPriority(1))
+            Assertions.assertTrue(isValidPriority(2))
+            Assertions.assertTrue(isValidPriority(3))
+            Assertions.assertTrue(isValidPriority(4))
+            Assertions.assertTrue(isValidPriority(4))
+        }
+
+        @Test
+        fun isValidPriorityFalseWhenPriorityDoesNotExist() {
+            Assertions.assertFalse(isValidPriority(-2))
+            Assertions.assertFalse(isValidPriority(0))
+            Assertions.assertFalse(isValidPriority(6))
+        }
+    }
 }
