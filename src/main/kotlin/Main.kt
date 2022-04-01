@@ -135,7 +135,7 @@ fun addNote() {
 
     var noteCategory = readNextLine("Enter a category for the note (Work,College,Home,Sport,Holidays): ")
     while (!isValidCategory(noteCategory)) {
-        noteCategory = readNextLine("Invalid category, enter a category (Work,College,Home,Sport,Holiday): ")
+        noteCategory = readNextLine("Invalid category, enter a category (Work,College,Home,Sport,Holidays): ")
     }
 
     val isAdded = noteAPI.add(Note(noteTitle, noteStatus, notePriority, noteCategory, false))
@@ -170,7 +170,7 @@ fun updateNote() {
                 notePriority = readNextInt("Invalid priority, enter a priority (1-low, 2, 3, 4, 5-high): ")
             }
 
-            var noteCategory = readNextLine("Enter a category for the note (Work,College,Home,Sport,Holiday): ")
+            var noteCategory = readNextLine("Enter a category for the note (Work,College,Home,Sport,Holidays): ")
             while (!isValidCategory(noteCategory)) {
                 noteCategory = readNextLine("Invalid category, enter a category (Work,College,Home,Sport,Holidays): ")
             }
