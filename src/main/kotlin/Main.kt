@@ -11,21 +11,19 @@ import utils.ScannerInput.readNextLine
 import java.io.File
 import java.lang.System.exit
 
-
-
-//private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
-//private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
+// private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
+// private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
 private val noteAPI = NoteAPI(YAMLSerializer(File("notes.yaml")))
 
 private val logger = KotlinLogging.logger {}
-
 
 fun main(args: Array<String>) {
     runMenu()
 }
 
-fun mainMenu() : Int {
-    return ScannerInput.readNextInt(""" 
+fun mainMenu(): Int {
+    return ScannerInput.readNextInt(
+        """ 
          > ----------------------------------
          > |        NOTE KEEPER APP         |
          > ----------------------------------
@@ -41,23 +39,24 @@ fun mainMenu() : Int {
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+    )
 }
 
 fun runMenu() {
     do {
         val option = mainMenu()
         when (option) {
-            1  -> addNote()
-            2  -> listNotes()
-            3  -> updateNote()
-            4  -> deleteNote()
-            5  -> archiveNote()
-            6  -> updateStatus()
-            7  -> save()
-            8  -> load()
-            0  -> exitApp()
-            else -> System.out.println("Invalid option entered: ${option}")
+            1 -> addNote()
+            2 -> listNotes()
+            3 -> updateNote()
+            4 -> deleteNote()
+            5 -> archiveNote()
+            6 -> updateStatus()
+            7 -> save()
+            8 -> load()
+            0 -> exitApp()
+            else -> System.out.println("Invalid option entered: $option")
         }
     } while (true)
 }
@@ -80,61 +79,61 @@ fun listNotes() {
                   > |  11) Search title              |
                   > |  12) Search status             |
                   > ----------------------------------
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+        )
 
         when (option) {
-            1  -> listAllNotes();
-            2  -> listActiveNotes();
-            3  -> listArchivedNotes();
-            4  -> numberOfArchivedNotes();
-            5  -> numberOfActiveNotes();
-            6  -> listNotesBySelectedPriority();
-            7  -> notesSortedByPriority();
-            8  -> notesSortedByTitle();
-            9  -> notesSortedByCategory();
-            10 -> searchNotesByCategory();
-            11 -> searchNotesByTitle();
-            12 -> searchNotesByStatus();
-            else -> println("Invalid option entered: " + option);
+            1 -> listAllNotes()
+            2 -> listActiveNotes()
+            3 -> listArchivedNotes()
+            4 -> numberOfArchivedNotes()
+            5 -> numberOfActiveNotes()
+            6 -> listNotesBySelectedPriority()
+            7 -> notesSortedByPriority()
+            8 -> notesSortedByTitle()
+            9 -> notesSortedByCategory()
+            10 -> searchNotesByCategory()
+            11 -> searchNotesByTitle()
+            12 -> searchNotesByStatus()
+            else -> println("Invalid option entered: " + option)
         }
     } else {
-        println("Option Invalid - No notes stored");
+        println("Option Invalid - No notes stored")
     }
 }
 
-
 fun save() {
-        try {
-            noteAPI.store()
-        } catch (e: Exception) {
-            System.err.println("Error writing to file: $e")
-        }
+    try {
+        noteAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
     }
+}
 
-    fun load() {
-        try {
-            noteAPI.load()
-        } catch (e: Exception) {
-            System.err.println("Error reading from file: $e")
-        }
+fun load() {
+    try {
+        noteAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
     }
+}
 
-fun addNote(){
-    //logger.info { "addNote() function invoked" }
+fun addNote() {
+    // logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
 
     var noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
-    while (!isValidStatus(noteStatus)){
+    while (!isValidStatus(noteStatus)) {
         noteStatus = readNextLine("Invalid status, enter a status for the note (ToDo, Doing, Done: ")
     }
 
     var notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-    while (!isValidPriority(notePriority)){
+    while (!isValidPriority(notePriority)) {
         notePriority = readNextInt("Invalid priority, enter a priority (1-low, 2, 3, 4, 5-high): ")
     }
 
     var noteCategory = readNextLine("Enter a category for the note (Work,College,Home,Sport,Holiday): ")
-    while (!isValidCategory(noteCategory)){
+    while (!isValidCategory(noteCategory)) {
         noteCategory = readNextLine("Invalid category, enter a category (Work,College,Home,Sport,Holiday): ")
     }
 
@@ -146,37 +145,37 @@ fun addNote(){
     }
 }
 
-fun listAllNotes(){
-    //logger.info { "listNotes() function invoked" }
+fun listAllNotes() {
+    // logger.info { "listNotes() function invoked" }
     println(noteAPI.listAllNotes())
 }
 
 fun updateNote() {
-    //logger.info { "updateNotes() function invoked" }
+    // logger.info { "updateNotes() function invoked" }
     listAllNotes()
     if (noteAPI.numberOfNotes() > 0) {
-        //only ask the user to choose the note if notes exist
+        // only ask the user to choose the note if notes exist
         val indexToUpdate = readNextInt("Enter the index of the note to update: ")
         if (noteAPI.isValidIndex(indexToUpdate)) {
             val noteTitle = readNextLine("Enter a title for the note: ")
 
             var noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
-            while (!isValidStatus(noteStatus)){
+            while (!isValidStatus(noteStatus)) {
                 noteStatus = readNextLine("Invalid status, enter a status for the note (ToDo, Doing, Done: ")
             }
 
             var notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-            while (!isValidPriority(notePriority)){
+            while (!isValidPriority(notePriority)) {
                 notePriority = readNextInt("Invalid priority, enter a priority (1-low, 2, 3, 4, 5-high): ")
             }
 
             var noteCategory = readNextLine("Enter a category for the note (Work,College,Home,Sport,Holiday): ")
-            while (!isValidCategory(noteCategory)){
+            while (!isValidCategory(noteCategory)) {
                 noteCategory = readNextLine("Invalid category, enter a category (Work,College,Home,Sport,Holiday): ")
             }
 
-            //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteStatus, notePriority, noteCategory, false))){
+            // pass the index of the note and the new note details to NoteAPI for updating and check for success.
+            if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, noteStatus, notePriority, noteCategory, false))) {
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -187,13 +186,13 @@ fun updateNote() {
     }
 }
 
-fun deleteNote(){
-    //logger.info { "deleteNotes() function invoked" }
+fun deleteNote() {
+    // logger.info { "deleteNotes() function invoked" }
     listNotes()
     if (noteAPI.numberOfNotes() > 0) {
-        //only ask the user to choose the note to delete if notes exist
+        // only ask the user to choose the note to delete if notes exist
         val indexToDelete = readNextInt("Enter the index of the note to delete: ")
-        //pass the index of the note to NoteAPI for deleting and check for success.
+        // pass the index of the note to NoteAPI for deleting and check for success.
         val noteToDelete = noteAPI.deleteNote(indexToDelete)
         if (noteToDelete != null) {
             println("Delete Successful! Deleted note: ${noteToDelete.noteTitle}")
@@ -203,7 +202,7 @@ fun deleteNote(){
     }
 }
 
-fun exitApp(){
+fun exitApp() {
     println("Exiting...bye")
     exit(0)
 }
@@ -224,21 +223,21 @@ fun numberOfActiveNotes() {
     println(noteAPI.numberOfActiveNotes())
 }
 
-fun listNotesBySelectedPriority(){
-    val chosenPriority=ScannerInput.readNextInt("Enter priority ")
+fun listNotesBySelectedPriority() {
+    val chosenPriority = ScannerInput.readNextInt("Enter priority ")
     println(noteAPI.listNotesBySelectedPriority(chosenPriority))
     println("There are ${noteAPI.numberOfNotesByPriority(chosenPriority)} notes for this priority")
 }
 
-fun notesSortedByPriority(){
+fun notesSortedByPriority() {
     println(noteAPI.notesSortedByPriority())
 }
 
-fun notesSortedByTitle(){
+fun notesSortedByTitle() {
     println(noteAPI.notesSortedByTitle())
 }
 
-fun notesSortedByCategory(){
+fun notesSortedByCategory() {
     println(noteAPI.notesSortedByCategory())
 }
 
@@ -290,10 +289,10 @@ fun updateStatus() {
         val indexToStatus = readNextInt("Enter the index of the note to update: ")
         if (noteAPI.isValidIndex(indexToStatus)) {
             var noteStatus = readNextLine("Enter a status for the note (ToDo, Doing, Done: ")
-            while (!isValidStatus(noteStatus)){
+            while (!isValidStatus(noteStatus)) {
                 noteStatus = readNextLine("Invalid status, enter a status for the note (ToDo, Doing, Done: ")
             }
-            if (noteAPI.updateStatus(indexToStatus, noteStatus)){
+            if (noteAPI.updateStatus(indexToStatus, noteStatus)) {
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -303,7 +302,3 @@ fun updateStatus() {
         }
     }
 }
-
-
-
-

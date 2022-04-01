@@ -1,7 +1,7 @@
 package utils
 
 object Helper {
-    //utility method to determine if an index is valid in a list.
+    // utility method to determine if an index is valid in a list.
     @JvmStatic
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
@@ -12,7 +12,7 @@ object Helper {
     }
     @JvmStatic
     fun isValidCategory(category: String): Boolean {
-        var categories = listOf("work","college","home","sport","holidays")
+        var categories = listOf("work", "college", "home", "sport", "holidays")
         return categories.contains(category.lowercase())
     }
     @JvmStatic
